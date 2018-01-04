@@ -1,0 +1,16 @@
+@charset "UTF-8";
+
+ @font-face {
+   font-family: 'CabinFallback';
+   src: url('/fonts/Cabin-Regular.otf');
+   font-weight: normal;
+   font-style: normal;
+ }
+
+ @font-face {
+   font-family: 'CabinFallback';
+   src: url('/fonts/Cabin-Bold.otf');
+   font-weight: bold;
+   font-style: normal;
+ }
+
