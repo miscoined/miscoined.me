@@ -1,2 +1,0 @@
-miscoined.asd
-miscoined-test.asd
