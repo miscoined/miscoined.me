@@ -10,7 +10,7 @@ body {
 }
 
 .swatches {
-  font-family: "Bukhari Script", cursive;
+  font-family: "Bukhari Script", sans-serif;
   font-feature-settings: "swsh";
 }
 
@@ -28,7 +28,7 @@ body {
 }
 
 .landing h1 {
-  font: 10vw "Bukhari Script", cursive;
+  font: 10vw "Bukhari Script", sans-serif;
   text-align: center;
   margin-bottom: 4vw;
   line-height: 1;
