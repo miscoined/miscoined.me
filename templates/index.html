@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+  <main class="landing">
+    <h1>Kelly Stewar<span class="swatches">t</span></h1>
+  
+    <address>
+      <a href="mailto:stewart.g.kelly@gmail.com">
+        <i class="fa fa-envelope" title="Email"></i> stewart.g.kelly@gmail.com
+      </a>
+      <a href="https://www.github.com/miscoined">
+        <i class="fa fa-github" title="Github"></i> @miscoined
+      </a>
+      <a href="{{ url_for('static', filename='doc/cv.pdf') }}"><i class="fa fa-download" title="Download"></i> CV</a>
+    </address>
+  
+  </main>
+{% endblock %}
