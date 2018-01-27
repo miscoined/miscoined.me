@@ -38,7 +38,7 @@ body > section {
  }
 
  h1, h2 {
-   font-family: "Bukhari Script";
+   fontsvgmily: "Bukhari Script";
    font-weight: normal;
  }
 
@@ -106,7 +106,7 @@ body > section {
    display: block;
  }
 
- body > header .fa {
+ body > header svg {
    position: absolute;
    left: 0;
    display: block;
@@ -120,7 +120,7 @@ body > section {
    text-align: justify;
  }
 
- body > header p .fa {
+ body > header p svg {
    top: 50%;
    transform: translateY(-50%);
    text-align: center;
@@ -152,7 +152,6 @@ body > section {
    margin-left: 5px;
    margin-right: 5px;
  }
-
 
  main > section > div li {
    margin: 0;
