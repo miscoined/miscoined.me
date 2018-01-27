@@ -4,7 +4,7 @@ html, body {
   background: #2e282a;
 }
 
-.landing {
+main {
   font-family: sans-serif;
   text-align: center;
   display: flex;
@@ -15,7 +15,7 @@ html, body {
   margin: auto;
 }
 
-.landing h1 {
+h1 {
   font: 10vw "Bukhari Script", sans-serif;
   text-align: center;
   margin-bottom: 4vw;
@@ -25,13 +25,13 @@ html, body {
   text-shadow: 2px 2px #171616;
 }
 
-.landing address {
+address {
   text-align: left;
   font: 15px Cabin, CabinFallback, sans-serif;
   color: #544f50;
 }
 
-.landing address a {
+address a {
   font-size: 1.2em;
   display: block;
   color: #cd5334;
@@ -41,14 +41,14 @@ html, body {
   border-bottom: 1px solid #171616;
 }
 
-.landing address a:hover {
+address a:hover {
   background-color: #171616;
 }
 
-.landing address i {
+address i {
   color: #cd5334;
 }
 
-.landing address a i {
+address a i {
   float: left;
 }

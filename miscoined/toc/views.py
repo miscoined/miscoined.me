@@ -1,4 +1,4 @@
-from flask import render_template, request
+from flask import render_template, request, flash
 
 from miscoined import app
 from miscoined.toc.forms import CharacterCreateForm

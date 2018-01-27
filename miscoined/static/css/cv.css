@@ -1,18 +1,6 @@
- /*
+/*
  https://coolors.co/c97d60-544f50-cd5334-ffbcb5-f2e5d7
 */
-
-@font-face {
-  font-family: 'FontAwesome';
-  src: local('FontAwesome') url('font/fontawesome-webfont.eot?v=4.7.0');
-  src: url('font/fontawesome-webfont.eot?#iefix&v=4.7.0') format('embedded-opentype'),
-       url('font/fontawesome-webfont.woff2?v=4.7.0') format('woff2'),
-       url('font/fontawesome-webfont.woff?v=4.7.0') format('woff'),
-       url('font/fontawesome-webfont.ttf?v=4.7.0') format('truetype'),
-       url('font/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular') format('svg');
-  font-weight: normal;
-  font-style: normal;
-}
 
 /*
  @page {
@@ -31,10 +19,6 @@ body {
    box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
 }
 */
-
-html, body {
-    height: 100%;
-}
 
 body {
    font: 14px "Cabin";
@@ -73,9 +57,11 @@ body > section {
  dl {
    column-count: 2;
  }
+
  dt {
    break-before: column;
  }
+
  dd {
    margin: 0;
  }
