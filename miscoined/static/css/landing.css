@@ -1,0 +1,54 @@
+@charset "UTF-8";
+
+html, body {
+  background: #2e282a;
+}
+
+.landing {
+  font-family: sans-serif;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  height: 100%;
+  width: 50vw;
+  margin: auto;
+}
+
+.landing h1 {
+  font: 10vw "Bukhari Script", sans-serif;
+  text-align: center;
+  margin-bottom: 4vw;
+  line-height: 1;
+  font-feature-settings: "ss02";
+  color: #cd5334;
+  text-shadow: 2px 2px #171616;
+}
+
+.landing address {
+  text-align: left;
+  font: 15px Cabin, CabinFallback, sans-serif;
+  color: #544f50;
+}
+
+.landing address a {
+  font-size: 1.2em;
+  display: block;
+  color: #cd5334;
+  text-decoration: none;
+  padding: 10px 10px;
+  text-align: center;
+  border-bottom: 1px solid #171616;
+}
+
+.landing address a:hover {
+  background-color: #171616;
+}
+
+.landing address i {
+  color: #cd5334;
+}
+
+.landing address a i {
+  float: left;
+}
