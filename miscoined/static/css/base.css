@@ -1,0 +1,15 @@
+@charset "UTF-8";
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+.swatches {
+  font-family: "Bukhari Script", sans-serif;
+  font-feature-settings: "swsh";
+}
+
