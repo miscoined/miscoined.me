@@ -10,11 +10,13 @@
 
   <address>
     <a href="mailto:stewart.g.kelly@gmail.com">
-      <i class="fa fa-envelope" title="Email"></i> stewart.g.kelly@gmail.com
+      <span class="fas fa-envelope"></span> stewart.g.kelly@gmail.com
     </a>
     <a href="https://www.github.com/miscoined">
-      <i class="fa fa-github" title="Github"></i> @miscoined
+      <span class="fab fa-github"></span> @miscoined
     </a>
-    <a href="{{ url_for('static', filename='doc/cv.pdf') }}"><i class="fa fa-download" title="Download"></i> CV</a>
+    <a href="{{ url_for('static', filename='doc/cv.pdf') }}">
+      <span class="fas fa-download"></span> CV
+    </a>
   </address>
 {% endblock %}

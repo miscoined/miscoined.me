@@ -45,10 +45,6 @@ address a:hover {
   background-color: #171616;
 }
 
-address i {
-  color: #cd5334;
-}
-
-address a i {
+address a svg {
   float: left;
 }
