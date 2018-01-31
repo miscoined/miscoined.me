@@ -1,12 +1,47 @@
-{% macro render_field(field) %}
-  <dt>{{ field.label }}
-  <dd>{{ field(**kwargs)|safe }}
-    {% if field.errors %}
-      <ul class=errors>
-        {% for error in field.errors %}
-          <li>{{ error }}</li>
-        {% endfor %}
-      </ul>
-    {% endif %}
-  </dd>
+{% macro ability_field(name, values) %}
+
+<label for="ability-{{ name }}">{{ name.title() }}</label>
+<input type="number"
+       value="{{ values["value"] }}"
+       min="0"
+       name="ability-{{ contents }}"
+       id="ability-{{ contents }}" />
+
+{% if name == "languages" %}
+  <button type="button" id="add-language">+</button>
+  {% for language in values["languages"] %}
+  <input type="text"
+         name="ability-language-{{ loop.index }}"
+	 aria-label="Language {{ loop.index }}"
+         value="{{ language }}" />
+  {% endfor %}
+{% endif %}
+
+{% if name == "district knowledges" %}
+  <button type="button" id="add-district">+</button>
+  {% for district in values["districts"] %}
+  <input type="text"
+         name="ability-district-{{ loop.index }}-name"
+	 aria-label="District {{ loop.index }} Name"
+         value="{{ district }}" />
+  <input type="number"
+	 name="ability-district-{{ loop.index }}-value"
+         aria-label="District {{ loop.index }} Value"
+	 value="{{ values['districts'][district] }}" />
+  {% endfor %}
+{% endif %}
+
+{% endmacro %}
+  
+{% macro ability_fields(title, abilities) %}
+<fieldset>
+  <legend>{{ title }}</legend>
+  <ol>
+    {% for ability in abilities|sort %}
+    <li>
+      {{ ability_field(ability, abilities[ability]) }}
+    </li>
+    {% endfor %}
+  </ol>
+</fieldset>
 {% endmacro %}
