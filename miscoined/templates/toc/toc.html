@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% from "_form.html" import ability_fields %}
+{% from "_form.html" import ability_fields, language_field %}
 
 {% block head %}
 {{ super() }}
@@ -23,4 +23,23 @@
 
   </fieldset>
 </form>
+
+<script>
+  function populateLanguages() {
+      var languageField = document.getElementById("ability-languages");
+      var languages = JSON.parse(languageField.dataset.languages);
+      var container = document.getElementById("ability-languages-list");
+      container.innerHTML = "";
+      for (var i=0; i < languageField.value; i++) {
+	  var li = document.createElement("li");
+          var input = document.createElement("input");
+          input.type = "text";
+          input.name = "ability-language-" + i;
+          input.value = i < languages.length ? languages[i] : "";
+	  li.appendChild(input);
+          container.appendChild(li);
+      }
+  }
+</script>
+
 {% endblock %}

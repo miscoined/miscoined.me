@@ -1,46 +1,51 @@
-{% macro ability_field(name, values) %}
 
-<label for="ability-{{ name }}">{{ name.title() }}</label>
+{% macro ability_field(name, values) %}
+<label for="ability-{{ name.split()|join }}">{{ name|title }}</label>
 <input type="number"
        value="{{ values["value"] }}"
        min="0"
-       name="ability-{{ contents }}"
-       id="ability-{{ contents }}" />
+       name="ability-{{ name }}"
+       id="ability-{{ name }}"
+       {% if name == "languages" %}
+         data-languages="{{ values["languages"]|tojson }}"
+         onchange="populateLanguages()"
+       {% endif %}
+       />
 
 {% if name == "languages" %}
-  <button type="button" id="add-language">+</button>
-  {% for language in values["languages"] %}
-  <input type="text"
-         name="ability-language-{{ loop.index }}"
-	 aria-label="Language {{ loop.index }}"
-         value="{{ language }}" />
-  {% endfor %}
+  <ul id="ability-languages-list" >
+    {% for i in range(values["value"]) %}
+    <li><input type="text"
+           name="ability-language-{{ i }}"
+           aria-label="Language {{ i }}"
+           value="{{ values["languages"][i] if i < len(values["languages"]) else '' }}" />
+    </li>
+    {% endfor %}
+  </ul>
 {% endif %}
 
 {% if name == "district knowledges" %}
-  <button type="button" id="add-district">+</button>
-  {% for district in values["districts"] %}
-  <input type="text"
-         name="ability-district-{{ loop.index }}-name"
-	 aria-label="District {{ loop.index }} Name"
-         value="{{ district }}" />
-  <input type="number"
-	 name="ability-district-{{ loop.index }}-value"
-         aria-label="District {{ loop.index }} Value"
-	 value="{{ values['districts'][district] }}" />
-  {% endfor %}
+  <ul id="ability-districts-list">
+    {% for district, value in values["districts"]|dictsort %}
+    <li>
+      <label for="ability-district-{{ district.split()|join }}">
+        {{ district|title }}
+      </label>
+      <input type="number"
+             name="ability-district-{{ district.split()|join }}-value"
+             value="{{ value }}" />
+    </li>
+    {% endfor %}
+  </ul>
 {% endif %}
-
 {% endmacro %}
   
 {% macro ability_fields(title, abilities) %}
 <fieldset>
   <legend>{{ title }}</legend>
   <ol>
-    {% for ability in abilities|sort %}
-    <li>
-      {{ ability_field(ability, abilities[ability]) }}
-    </li>
+    {% for ability, values in abilities|dictsort %}
+    <li>{{ ability_field(ability, values) }}</li>
     {% endfor %}
   </ol>
 </fieldset>

@@ -9,6 +9,6 @@ from miscoined.toc.abilities import Abilities
 def character_create():
     return render_template(
         'toc/toc.html',
-        investigative_abilities=Abilities.investigative(),
-        general_abilities=Abilities.general()
+        investigative_abilities=Abilities.investigative,
+        general_abilities=Abilities.general
     )
