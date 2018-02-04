@@ -1,9 +1,9 @@
 {% extends "base.html" %}
-{% from "_form.html" import ability_fields, language_field %}
 
 {% block head %}
 {{ super() }}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/toc.css') }}" />
+<script src="{{ url_for('static', filename='js/knockout-3.4.2-min.js') }}"></script>
 {% endblock %}
 
 {% block content %}
@@ -45,46 +45,57 @@
 
     <fieldset>
       <legend>Investigative</legend>
-      {% for category in investigative_abilities|sort %}
-        {{ ability_fields(category.title(), investigative_abilities[category]) }}
-      {% endfor %}
+      <ul data-bind="foreach: investigative">
+        <li>
+          <label data-bind="for: abilityId(value().name), text: value().name + ' (' + value().category + ')'"></label>
+          <input
+            data-bind="value: value().value,
+                       name: abilityId(value().name),
+                       id: abilityId(value().name)"
+            type="number"
+            min="0" />
+        </li>
+      </ul>
     </fieldset>
 
-    {{ ability_fields("General", general_abilities) }}
+    <fieldset>
+      <legend>General</legend>
+      <ul data-bind="foreach: general">
+        <li>
+          <label data-bind="for: abilityId(value().name), text: value().name"></label>
+          <input
+            data-bind="value: value().value,
+                       name: abilityId(value().name),
+                       id: abilityId(value().name)"
+            type="number"
+            min="0" />
+        </li>
+      </ul>
+    </fieldset>
 
   </fieldset>
 </form>
 
 <script>
-  function setCredit(min, max) {
-    var creditField = document.getElementById("ability-creditrating");
-    creditField.min = min;
-    creditField.max = max;
-  };
+ function CharactersViewModel() {
+   var self = this;
 
-  function setOccupation() {
-    var occupationField = document.getElementById("occupation");
-    var occupation = JSON.parse(
-      occupationField.dataset.occupations)[occupationField.value];
-    var container = document.getElementById("
-  };
+   var investigativeAbilities = {{ investigative|tojson }};
+   self.investigative = investigativeAbilities.map(function(ability) {
+     return {value: ko.observable(ability)};
+   });
 
-  function populateLanguages() {
-      var languageField = document.getElementById("ability-languages");
-      var languages = JSON.parse(languageField.dataset.languages);
-      var container = document.getElementById("ability-languages-list");
-      container.innerHTML = "";
-      for (var i=0; i < languageField.value; i++) {
-	  var li = document.createElement("li");
-          var input = document.createElement("input");
-          input.type = "text";
-          input.name = "ability-language-" + i;
-          input.setAttribute('aria-label', "Language " + i);
-          input.value = i < languages.length ? languages[i] : "";
-	  li.appendChild(input);
-          container.appendChild(li);
-      }
-  };
+   var generalAbilities = {{ general|tojson }};
+   self.general = generalAbilities.map(function(ability) {
+     return {value: ko.observable(ability)};
+   });
+
+
+   self.abilityId = function(ability) {
+     return "ability-" + s.replace(/\s/g, "");
+   };
+ };
+
+ ko.applyBindings(new CharactersViewModel());
 </script>
-
 {% endblock %}

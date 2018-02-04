@@ -2,9 +2,12 @@
 Ability related functions and constants
 """
 
+
 class classproperty(property):
+    """Helper decorator to combine @classmethod and @property"""
     def __get__(self, cls, owner):
         return classmethod(self.fget).__get__(None, owner)()
+
 
 class Abilities:
 
@@ -23,42 +26,43 @@ class Abilities:
                       "evidence collection", "forgery", "forensics",
                       "locksmith", "outdoorsman", "pharmacy", "photography"]
     }
-    
+
     DISTRICTS = ["university", "old arkham"]
-    
+
     GENERAL = ["athletics", "conceal", "disguise", "driving",
                "electrical repair", "explosives", "filch", "firearms",
                "first aid", "fleeing", "hypnosis", "magic",
                "mechanical repair", "piloting", "preparedness",
                "psychoanalysis", "riding", "scuffling", "sense trouble",
                "shadowing", "stealth", "weapons"]
-    
+
     GENERAL_INVESTIGATIVE = ["disguise", "electrical repair", "explosives",
                              "mechanical repair"]
 
-    @classmethod
-    def _ability_to_dict(cls, ability):
-        d = {"value": 0}
-        if ability == "district knowledges":
-            d["districts"] = {district: 0 for district in cls.DISTRICTS}
-        elif ability == "languages":
-            d["languages"] = []
-        if ability in cls.GENERAL_INVESTIGATIVE:
-            d["investigative"] = True
-        return d
-
     @classproperty
     def investigative(cls):
-        return {
-            cat: {
-                ability: cls._ability_to_dict(ability)
-                for ability in cls.INVESTIGATIVE_CATEGORIES[cat]
-            } for cat in cls.INVESTIGATIVE_CATEGORIES
-        }
+        abilities = []
+        for cat in cls.INVESTIGATIVE_CATEGORIES:
+            for ability in cls.INVESTIGATIVE_CATEGORIES[cat]:
+                ability_dict = {
+                    "name": ability,
+                    "value": 0,
+                    "type": "investigative",
+                    "category": cat
+                }
+                if ability == "district knowledges":
+                    ability_dict["districts"] = {
+                        district: 0 for district in cls.DISTRICTS}
+                elif ability == "languages":
+                    ability_dict["languages"] = []
+                abilities.append(ability_dict)
+        return abilities
 
     @classproperty
     def general(cls):
-        return {
-            ability: cls._ability_to_dict(ability) for ability in cls.GENERAL
-        }
-
+        return [{
+            "name": ability,
+            "value": 0,
+            "type": "general",
+            "investigative": ability in cls.GENERAL_INVESTIGATIVE
+        } for ability in cls.GENERAL]

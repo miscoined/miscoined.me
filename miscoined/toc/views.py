@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for
+from flask import render_template
 
 from miscoined import app
 from miscoined.toc.abilities import Abilities
@@ -11,6 +11,6 @@ def character_create():
     return render_template(
         'toc/character.html',
         occupations=Occupations.OCCUPATIONS,
-        investigative_abilities=Abilities.investigative,
-        general_abilities=Abilities.general,
+        investigative=Abilities.investigative,
+        general=Abilities.general,
     )
