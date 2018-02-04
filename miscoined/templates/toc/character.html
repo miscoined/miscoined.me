@@ -45,28 +45,37 @@
 
     <fieldset>
       <legend>Investigative</legend>
-      <ul data-bind="foreach: investigative">
-        <li>
-          <label data-bind="for: abilityId(value().name), text: value().name + ' (' + value().category + ')'"></label>
-          <input
-            data-bind="value: value().value,
-                       name: abilityId(value().name),
-                       id: abilityId(value().name)"
-            type="number"
-            min="0" />
-        </li>
-      </ul>
+      <!-- ko foreach: investigativeCategories -->
+      <fieldset>
+        <legend data-bind="text: $data"></legend>
+        <ul data-bind="foreach: $root.forCategory($data)">
+          <li>
+            <label data-bind="text: value().name, attr: {for: $root.abilityId(value().name)}"></label>
+            <input
+              data-bind="attr: {
+                         value: value().value,
+                         name: $root.abilityId(value().name),
+                         id: $root.abilityId(value().name)
+                         }"
+              type="number"
+              min="0" />
+          </li>
+        </ul>
+      </fieldset>
+    <!-- /ko -->
     </fieldset>
 
     <fieldset>
       <legend>General</legend>
       <ul data-bind="foreach: general">
         <li>
-          <label data-bind="for: abilityId(value().name), text: value().name"></label>
+          <label data-bind="text: value().name + (value().investigative ? '*' : ''), attr: {for: $root.abilityId(value().name)}"></label>
           <input
-            data-bind="value: value().value,
-                       name: abilityId(value().name),
-                       id: abilityId(value().name)"
+            data-bind="attr: {
+                       value: value().value,
+                       name: $root.abilityId(value().name),
+                       id: $root.abilityId(value().name)
+                       }"
             type="number"
             min="0" />
         </li>
@@ -80,6 +89,8 @@
  function CharactersViewModel() {
    var self = this;
 
+   self.investigativeCategories = {{ investigative_categories|tojson }};
+
    var investigativeAbilities = {{ investigative|tojson }};
    self.investigative = investigativeAbilities.map(function(ability) {
      return {value: ko.observable(ability)};
@@ -90,11 +101,16 @@
      return {value: ko.observable(ability)};
    });
 
+   self.forCategory = function(category) {
+     return ko.utils.arrayFilter(self.investigative, function(ability) {
+       return (ability.value)().category == category;
+     });
+   };
 
    self.abilityId = function(ability) {
-     return "ability-" + s.replace(/\s/g, "");
+     return "ability-" + ability.replace(/\s/g, "");
    };
- };
+ }
 
  ko.applyBindings(new CharactersViewModel());
 </script>
