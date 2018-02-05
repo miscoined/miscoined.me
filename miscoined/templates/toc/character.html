@@ -27,12 +27,12 @@
       <input type="text" id="nationality" />
     </li>
     <li>
-      <label for="occupation">Occupation</label>
-      <select id="occupation" data-occupations="{{ occupations|tojson }}">
-        {% for occupation in occupations %}
-        <option value="{{ occupation }}">{{ occupation|title }}</option>
-        {% endfor %}
-      </select>
+      <select
+        name="occupation"
+        data-bind="value: occupation,
+                   options: occupations,
+                   optionsCaption: 'Occupation',
+                   optionsText: 'name'"></select>
     </li>
     <li>
       <label for="name">Drive</label>
@@ -48,69 +48,88 @@
       <!-- ko foreach: investigativeCategories -->
       <fieldset>
         <legend data-bind="text: $data"></legend>
-        <ul data-bind="foreach: $root.forCategory($data)">
-          <li>
-            <label data-bind="text: value().name, attr: {for: 'ability-' + value().jsonName}"></label>
-            <input
-              data-bind="value: value().value,
-                         attr: {
-                         name: 'ability-' + value().jsonName,
-                         id: 'ability-' + value().jsonName,
-                         }"
-              type="number"
-              min="0" />
-
-            <!-- ko if: value().name == 'languages' -->
-            <ul data-bind="foreach: $root.languages()">
-              <li>
-               <input data-bind="value: value(),
-                                 attr: {name: 'ability-languages-' + $index}"
-                      type="text" />
-              </li>
-            </ul>
-            <!-- /ko -->
-
-            <!-- ko if: value().name == 'district knowledges' -->
-            <ul data-bind="foreach: value().districts">
-              <li>
-                <label data-bind="text: name"></label>
-                <input data-bind="value: name, attr: {
-                                  name: 'ability-districtknowledges-'+name,
-                                  id: 'ability-districtknowledges-'+name
-                                  }"
-                       type="number"
-                       min="0" />
-              </li>
-            </ul>
-            <!-- /ko -->
-
-          </li>
-        </ul>
+        <ul data-bind="template: {name: 'ability-template', foreach: $root.forCategory($data)}"></ul>
       </fieldset>
     <!-- /ko -->
     </fieldset>
 
     <fieldset>
       <legend>General</legend>
-      <ul data-bind="foreach: general">
-        <li>
-          <label data-bind="text: value().name,
-                            css: {'general-investigative': value().investigative},
-                            attr: {for: 'ability-' + value().jsonName}"></label>
-          <input
-            data-bind="value: value().value,
-                       attr: {name: 'ability-' + value().jsonName,
-                              id: 'ability-' + value().jsonName}"
-            type="number"
-            min="0" />
-        </li>
-      </ul>
+      <ul data-bind="template: {name: 'ability-template', foreach: general}"></ul>
     </fieldset>
 
   </fieldset>
 </form>
 
+<script type="text/html" id="ability-template">
+  <li>
+    <label data-bind="text: value().name,
+                      css: {'general-investigative': value().investigative,
+                            'ability-proficiency': $root.occupation().hasAbility(value().name)},
+                      attr: {for: 'ability-' + value().jsonName}"></label>
+
+    <!-- ko if: value().name != 'credit rating' -->
+    <input
+      data-bind="value: value().value,
+                 attr: {name: 'ability-' + value().jsonName,
+                 id: 'ability-' + value().jsonName}"
+      type="number"
+      min="0" />
+    <!-- /ko -->
+
+    <!-- ko if: value().name == 'credit rating' -->
+    <input
+      data-bind="value: $root.occupation().constrainCredit(value().value), attr: {
+                 name: 'ability-' + value().jsonName,
+                 id: 'ability-' + value().jsonName,
+                 min: $root.occupation().credit.min,
+                 max: $root.occupation().credit.max}"
+      type="number" />
+    <!-- /ko -->
+
+    <!-- ko if: value().name == 'languages' -->
+    <ul data-bind="foreach: $root.languages()">
+      <li>
+        <input data-bind="value: value(),
+                          attr: {name: 'ability-languages-' + $index}"
+               type="text" />
+      </li>
+    </ul>
+    <!-- /ko -->
+
+    <!-- ko if: value().name == 'district knowledges' -->
+    <ul data-bind="foreach: value().districts">
+      <li>
+        <label data-bind="text: name"></label>
+        <input data-bind="value: name, attr: {
+                          name: 'ability-districtknowledges-'+name,
+                          id: 'ability-districtknowledges-'+name
+                          }"
+               type="number"
+               min="0" />
+      </li>
+    </ul>
+    <!-- /ko -->
+
+  </li>
+</script>
+
 <script>
+
+ var Occupation = function(name, credit, abilities) {
+   this.name = name;
+   this.credit = credit;
+   this.abilities = abilities;
+
+   this.hasAbility = function(ability) {
+     return this.abilities.includes(ability);
+   };
+
+   this.constrainCredit = function(value) {
+     return Math.min(Math.max(value, this.credit.min), this.credit.max);
+   }
+ };
+
  function CharactersViewModel() {
    var self = this;
 
@@ -162,6 +181,12 @@
      });
    };
 
+   var occupations = {{ occupations|tojson }};
+   self.occupations = occupations.map(function(occ) {
+     return new Occupation(occ["name"], occ["credit rating"], occ["abilities"]);
+   });
+
+   self.occupation = ko.observable(self.occupations[0]);
  };
 
  ko.applyBindings(new CharactersViewModel());
