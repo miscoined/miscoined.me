@@ -50,12 +50,12 @@
         <legend data-bind="text: $data"></legend>
         <ul data-bind="foreach: $root.forCategory($data)">
           <li>
-            <label data-bind="text: value().name, attr: {for: $root.abilityId(value().name)}"></label>
+            <label data-bind="text: value().name, attr: {for: 'ability-' + value().jsonName}"></label>
             <input
               data-bind="value: value().value,
                          attr: {
-                         name: $root.abilityId(value().name),
-                         id: $root.abilityId(value().name)
+                         name: 'ability-' + value().jsonName,
+                         id: 'ability-' + value().jsonName,
                          }"
               type="number"
               min="0" />
@@ -94,13 +94,13 @@
       <legend>General</legend>
       <ul data-bind="foreach: general">
         <li>
-          <label data-bind="text: value().name + (value().investigative ? '*' : ''), attr: {for: $root.abilityId(value().name)}"></label>
+          <label data-bind="text: value().name,
+                            css: {'general-investigative': value().investigative},
+                            attr: {for: 'ability-' + value().jsonName}"></label>
           <input
             data-bind="value: value().value,
-                       attr: {
-                       name: $root.abilityId(value().name),
-                       id: $root.abilityId(value().name)
-                       }"
+                       attr: {name: 'ability-' + value().jsonName,
+                              id: 'ability-' + value().jsonName}"
             type="number"
             min="0" />
         </li>
@@ -162,9 +162,6 @@
      });
    };
 
-   self.abilityId = function(ability) {
-     return "ability-" + ability.replace(/\s/g, "");
-   };
  };
 
  ko.applyBindings(new CharactersViewModel());

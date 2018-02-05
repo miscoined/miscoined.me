@@ -11,7 +11,7 @@ def character_create():
     return render_template(
         'toc/character.html',
         occupations=Occupations.OCCUPATIONS,
-        investigative_categories=list(Abilities.INVESTIGATIVE_CATEGORIES.keys()),
+        investigative_categories=list(Abilities.CATEGORIES.keys()),
         investigative=Abilities.investigative,
         general=Abilities.general,
     )

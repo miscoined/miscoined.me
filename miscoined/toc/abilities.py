@@ -11,7 +11,7 @@ class classproperty(property):
 
 class Abilities:
 
-    INVESTIGATIVE_CATEGORIES = {
+    CATEGORIES = {
         "academic": ["accounting", "anthropology", "archaeology",
                      "architecture", "art history", "biology",
                      "correspondance", "cthulu mythos", "cryptography",
@@ -39,30 +39,34 @@ class Abilities:
     GENERAL_INVESTIGATIVE = ["disguise", "electrical repair", "explosives",
                              "mechanical repair"]
 
+    @classmethod
+    def to_dict(cls, name, ability_type, **additional):
+        ability = {
+            "name": name,
+            "jsonName": "".join(name.split()),
+            "value": 0,
+            "type": ability_type
+        }
+        ability.update(additional)
+        return ability
+
     @classproperty
     def investigative(cls):
         abilities = []
-        for cat in cls.INVESTIGATIVE_CATEGORIES:
-            for ability in cls.INVESTIGATIVE_CATEGORIES[cat]:
-                ability_dict = {
-                    "name": ability,
-                    "value": 0,
-                    "type": "investigative",
-                    "category": cat
-                }
-                if ability == "district knowledges":
-                    ability_dict["districts"] = [{"name": district, "value": 0}
-                                                 for district in cls.DISTRICTS]
-                elif ability == "languages":
-                    ability_dict["languages"] = []
-                abilities.append(ability_dict)
+        for cat in cls.CATEGORIES:
+            for name in cls.CATEGORIES[cat]:
+                ability = cls.to_dict(name, "investigative", category=cat)
+                if name == "district knowledges":
+                    ability["districts"] = [{"name": district, "value": 0}
+                                            for district in cls.DISTRICTS]
+                elif name == "languages":
+                    ability["languages"] = []
+                abilities.append(ability)
         return abilities
 
     @classproperty
     def general(cls):
-        return [{
-            "name": ability,
-            "value": 0,
-            "type": "general",
-            "investigative": ability in cls.GENERAL_INVESTIGATIVE
-        } for ability in cls.GENERAL]
+        return [cls.to_dict(
+            ability, "general",
+            investigative=ability in cls.GENERAL_INVESTIGATIVE
+        ) for ability in cls.GENERAL]
