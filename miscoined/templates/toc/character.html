@@ -52,13 +52,38 @@
           <li>
             <label data-bind="text: value().name, attr: {for: $root.abilityId(value().name)}"></label>
             <input
-              data-bind="attr: {
-                         value: value().value,
+              data-bind="value: value().value,
+                         attr: {
                          name: $root.abilityId(value().name),
                          id: $root.abilityId(value().name)
                          }"
               type="number"
               min="0" />
+
+            <!-- ko if: value().name == 'languages' -->
+            <ul data-bind="foreach: $root.languages()">
+              <li>
+               <input data-bind="value: value(),
+                                 attr: {name: 'ability-languages-' + $index}"
+                      type="text" />
+              </li>
+            </ul>
+            <!-- /ko -->
+
+            <!-- ko if: value().name == 'district knowledges' -->
+            <ul data-bind="foreach: value().districts">
+              <li>
+                <label data-bind="text: name"></label>
+                <input data-bind="value: name, attr: {
+                                  name: 'ability-districtknowledges-'+name,
+                                  id: 'ability-districtknowledges-'+name
+                                  }"
+                       type="number"
+                       min="0" />
+              </li>
+            </ul>
+            <!-- /ko -->
+
           </li>
         </ul>
       </fieldset>
@@ -71,8 +96,8 @@
         <li>
           <label data-bind="text: value().name + (value().investigative ? '*' : ''), attr: {for: $root.abilityId(value().name)}"></label>
           <input
-            data-bind="attr: {
-                       value: value().value,
+            data-bind="value: value().value,
+                       attr: {
                        name: $root.abilityId(value().name),
                        id: $root.abilityId(value().name)
                        }"
@@ -89,10 +114,40 @@
  function CharactersViewModel() {
    var self = this;
 
+   self.updateLanguages = function(value) {
+     var diff = Math.abs(value - self.languages().length);
+     if (value > self.languages().length) {
+       for (var i = 0; i < diff; i++) {
+         self.languages.push({value: ko.observable});
+       }
+     } else if (value < self.languages().length) {
+       for (var i = 0; i < diff; i++) {
+         self.languages.pop()
+       }
+     }
+   };
+
    self.investigativeCategories = {{ investigative_categories|tojson }};
 
    var investigativeAbilities = {{ investigative|tojson }};
    self.investigative = investigativeAbilities.map(function(ability) {
+
+     if (ability.name == 'languages') {
+
+       self.languages = ko.observableArray(ability.languages.map(function(language) {
+         return {value: ko.observable(language)};
+       }));
+       ability.value = ko.observable(ability.value);
+       ability.value.subscribe(self.updateLanguages);
+
+     } else if (ability.name == 'district knowledges') {
+
+       ability.districts = ability.districts.map(function(district) {
+         return {name: district.name, value: ko.observable(district.value)};
+       });
+
+     }
+
      return {value: ko.observable(ability)};
    });
 
@@ -102,7 +157,7 @@
    });
 
    self.forCategory = function(category) {
-     return ko.utils.arrayFilter(self.investigative, function(ability) {
+     return self.investigative.filter(function(ability) {
        return (ability.value)().category == category;
      });
    };
@@ -110,7 +165,7 @@
    self.abilityId = function(ability) {
      return "ability-" + ability.replace(/\s/g, "");
    };
- }
+ };
 
  ko.applyBindings(new CharactersViewModel());
 </script>

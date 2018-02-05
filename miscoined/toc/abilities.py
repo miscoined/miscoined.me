@@ -51,8 +51,8 @@ class Abilities:
                     "category": cat
                 }
                 if ability == "district knowledges":
-                    ability_dict["districts"] = {
-                        district: 0 for district in cls.DISTRICTS}
+                    ability_dict["districts"] = [{"name": district, "value": 0}
+                                                 for district in cls.DISTRICTS]
                 elif ability == "languages":
                     ability_dict["languages"] = []
                 abilities.append(ability_dict)
