@@ -1,0 +1,11 @@
+legend, .ability {
+  text-transform: capitalize;
+}
+
+.ability.proficient {
+  font-weight: bold;
+}
+
+.ability.general-investigative:after {
+  content: '*';
+}
