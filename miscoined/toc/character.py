@@ -1,6 +1,4 @@
-"""
-Ability related functions and constants
-"""
+"""Hold character-related classes and functions"""
 
 
 class classproperty(property):
@@ -9,7 +7,20 @@ class classproperty(property):
         return classmethod(self.fget).__get__(None, owner)()
 
 
-class Abilities:
+class Character:
+    """A Trail of Cthulu character."""
+
+    OCCUPATIONS = [{
+        "name": "antiquarian",
+        "credit": {"min": 2, "max": 5},
+        "abilities": ["architecture", "art history", "bargain", "history",
+                      "languages", "law", "library use"],
+    }, {
+        "name": "author",
+        "credit": {"min": 1, "max": 3},
+        "abilities": ["art", "history", "languages", "library use",
+                      "oral history", "bullshit detector"],
+    }]
 
     CATEGORIES = {
         "academic": ["accounting", "anthropology", "archaeology",
@@ -40,22 +51,33 @@ class Abilities:
                              "mechanical repair"]
 
     @classmethod
-    def to_dict(cls, name, ability_type, **additional):
-        ability = {
-            "name": name,
-            "jsonName": "".join(name.split()),
-            "value": 0,
-            "type": ability_type
+    def new(cls):
+        """Return a new trail of cthulu character dict."""
+        return {
+            "player": "",
+            "name": "",
+            "age": "",
+            "nationality": "",
+            "occupation": cls.OCCUPATIONS[0],
+            "drive": "",
+            "health": 1,
+            "stability": 1,
+            "sanity": 4,
+            "investigative": cls.investigative_abilities,
+            "general": cls.general_abilities,
+            "suspicion": 0,
+            "sourcesOfStability": [],
+            "pillarsOfSanity": [],
+            "contacts": [],
+            "inventory": []
         }
-        ability.update(additional)
-        return ability
 
     @classproperty
-    def investigative(cls):
+    def investigative_abilities(cls):
         abilities = []
         for cat in cls.CATEGORIES:
             for name in cls.CATEGORIES[cat]:
-                ability = cls.to_dict(name, "investigative", category=cat)
+                ability = {"name": name, "value": 0, "category": cat}
                 if name == "district knowledges":
                     ability["districts"] = [{"name": district, "value": 0}
                                             for district in cls.DISTRICTS]
@@ -65,8 +87,7 @@ class Abilities:
         return abilities
 
     @classproperty
-    def general(cls):
-        return [cls.to_dict(
-            ability, "general",
-            investigative=ability in cls.GENERAL_INVESTIGATIVE
-        ) for ability in cls.GENERAL]
+    def general_abilities(cls):
+        return [{"name": ability, "value": 0,
+                 "investigative": ability in cls.GENERAL_INVESTIGATIVE}
+                for ability in cls.GENERAL]

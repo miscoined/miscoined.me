@@ -1,0 +1,17 @@
+{% macro dynamic_fields(name, label_plural, label_singular) %}
+  <fieldset>
+    <legend>{{ label_plural }}</legend>
+    <button type="button"
+            data-bind="click: function(data, event) { {{ name }}.push({value: ko.observable()})}">
+      +
+    </button>
+    <ul data-bind="foreach: {{ name }}">
+      <li>
+        <input type="text"
+               data-bind="attr: {'aria-label': '{{ label_singular }} ' + $index},
+                     value: value()" />
+        <button type="button" data-bind="click: function(data, event) {$root.{{ name }}.splice($index, 1)}">-</button>
+      </li>
+    </ul>
+  </fieldset>
+{% endmacro %}

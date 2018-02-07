@@ -1,8 +1,8 @@
 from flask import render_template
 
 from miscoined import app
-from miscoined.toc.abilities import Abilities
-from miscoined.toc.occupations import Occupations
+
+from miscoined.toc.character import Character
 
 
 @app.route("/toc")
@@ -10,8 +10,7 @@ from miscoined.toc.occupations import Occupations
 def character_create():
     return render_template(
         'toc/character.html',
-        occupations=Occupations.OCCUPATIONS,
-        investigative_categories=list(Abilities.CATEGORIES.keys()),
-        investigative=Abilities.investigative,
-        general=Abilities.general,
+        occupations=Character.OCCUPATIONS,
+        investigative_categories=list(Character.CATEGORIES.keys()),
+        character=Character.new(),
     )
