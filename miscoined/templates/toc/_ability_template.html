@@ -1,0 +1,50 @@
+<li>
+  <label class="ability" data-bind="text: $data.name,
+                css: {'general-investigative': $data.investigative,
+                'proficient': $root.hasAbility($data.name)},
+                attr: {for: $data.jsonName}"></label>
+
+  <!-- ko if: $data.name != 'credit rating' -->
+  <input
+    data-bind="value: $data.value,
+               attr: {name: $data.jsonName,
+               id: $data.jsonName}"
+    type="number"
+    min="0" />
+  <!-- /ko -->
+
+  <!-- ko if: $data.name == 'credit rating' -->
+  <input
+    data-bind="value: $root.constrainCredit($data.value), attr: {
+               name: $data.jsonName,
+               id: $data.jsonName,
+               min: $root.occupation().credit.min,
+               max: $root.occupation().credit.max}"
+    type="number" />
+  <!-- /ko -->
+
+  <!-- ko if: $data.name == 'languages' -->
+  <ul data-bind="foreach: $data.languages()">
+    <li>
+      <input data-bind="value: name(),
+                        attr: {name: $data.jsonName + '-' + $index}"
+             type="text" />
+    </li>
+  </ul>
+  <!-- /ko -->
+
+  <!-- ko if: $data.name == 'district knowledges' -->
+  <ul data-bind="foreach: $data.districts">
+    <li>
+      <label data-bind="text: name"></label>
+      <input data-bind="value: value, attr: {
+                        name: $data.jsonName + '-' + name,
+                        id: $data.jsonName + '-' + name,
+                        }"
+             type="number"
+             min="0" />
+    </li>
+  </ul>
+  <!-- /ko -->
+
+</li>

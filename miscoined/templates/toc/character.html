@@ -5,13 +5,14 @@
 {% block head %}
   {{ super() }}
   <link rel="stylesheet" href="{{ url_for('static', filename='css/toc.css') }}" />
+  <script src="{{ url_for('static', filename='js/jquery-3.3.1-min.js') }}"></script>
   <script src="{{ url_for('static', filename='js/knockout-3.4.2-min.js') }}"></script>
   <script src="{{ url_for('static', filename='js/knockout.mapping-2.4.1-min.js') }}"></script>
 {% endblock %}
 
 {% block content %}
   <h2>Trail of Cthlulu</h2>
-  <form>
+  <form action="/toc" method="POST">
     <ol>
       <li>
         <label for="player">Player</label>
@@ -104,59 +105,12 @@
 
     {{ dynamic_fields("inventory", "Inventory", "Inventory Item") }}
 
+    <input type="submit" value="Submit" data-bind="click: submit" />
+
   </form>
 
   <script type="text/html" id="ability-template">
-    <li>
-      <label class="ability" data-bind="text: $data.name,
-                    css: {'general-investigative': $data.investigative,
-                    'proficient': $root.hasAbility($data.name)},
-                    attr: {for: $data.jsonName}"></label>
-
-      <!-- ko if: $data.name != 'credit rating' -->
-      <input
-        data-bind="value: $data.value,
-                   attr: {name: $data.jsonName,
-                   id: $data.jsonName}"
-        type="number"
-        min="0" />
-      <!-- /ko -->
-
-      <!-- ko if: $data.name == 'credit rating' -->
-      <input
-        data-bind="value: $root.constrainCredit($data.value), attr: {
-                   name: $data.jsonName,
-                   id: $data.jsonName,
-                   min: $root.occupation().credit.min,
-                   max: $root.occupation().credit.max}"
-        type="number" />
-      <!-- /ko -->
-
-      <!-- ko if: $data.name == 'languages' -->
-      <ul data-bind="foreach: $data.languages()">
-        <li>
-          <input data-bind="value: name(),
-                            attr: {name: $data.jsonName + '-' + $index}"
-                 type="text" />
-        </li>
-      </ul>
-      <!-- /ko -->
-
-      <!-- ko if: $data.name == 'district knowledges' -->
-      <ul data-bind="foreach: $data.districts">
-        <li>
-          <label data-bind="text: name"></label>
-          <input data-bind="value: name, attr: {
-                            name: $data.jsonName + '-' + name,
-                            id: $data.jsonName + '-' + name,
-                            }"
-                 type="number"
-                 min="0" />
-        </li>
-      </ul>
-      <!-- /ko -->
-
-    </li>
+    {% include "toc/_ability_template.html" %}
   </script>
 
   <script>
@@ -238,6 +192,21 @@
      self.forCategory = function(category) {
        return self.investigative().filter(function(ability) {
          return ability.category == category;
+       });
+     };
+
+     self.submit = function() {
+       $.ajax ({
+         url: "/toc/character",
+         type: "POST",
+         data: ko.mapping.toJSON(self),
+         contentType: "application/json",
+         success: function(result) {
+           alert("Success");
+         },
+         error: function(result) {
+           alert(result.responseText);
+         }
        });
      };
 

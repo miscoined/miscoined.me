@@ -1,0 +1,112 @@
+[
+  {
+    "name": "athletics",
+    "value": 0,
+    "investigative": false
+  },
+  {
+    "name": "conceal",
+    "value": 0,
+    "investigative": false
+  },
+  {
+    "name": "disguise",
+    "value": 0,
+    "investigative": true
+  },
+  {
+    "name": "driving",
+    "value": 0,
+    "investigative": false
+  },
+  {
+    "name": "electrical repair",
+    "value": 0,
+    "investigative": true
+  },
+  {
+    "name": "explosives",
+    "value": 0,
+    "investigative": true
+  },
+  {
+    "name": "filch",
+    "value": 0,
+    "investigative": false
+  },
+  {
+    "name": "firearms",
+    "value": 0,
+    "investigative": false
+  },
+  {
+    "name": "first aid",
+    "value": 0,
+    "investigative": false
+  },
+  {
+    "name": "fleeing",
+    "value": 0,
+    "investigative": false
+  },
+  {
+    "name": "hypnosis",
+    "value": 0,
+    "investigative": false
+  },
+  {
+    "name": "magic",
+    "value": 0,
+    "investigative": false
+  },
+  {
+    "name": "mechanical repair",
+    "value": 0,
+    "investigative": true
+  },
+  {
+    "name": "piloting",
+    "value": 0,
+    "investigative": false
+  },
+  {
+    "name": "preparedness",
+    "value": 0,
+    "investigative": false
+  },
+  {
+    "name": "psychoanalysis",
+    "value": 0,
+    "investigative": false
+  },
+  {
+    "name": "riding",
+    "value": 0,
+    "investigative": false
+  },
+  {
+    "name": "scuffling",
+    "value": 0,
+    "investigative": false
+  },
+  {
+    "name": "sense trouble",
+    "value": 0,
+    "investigative": false
+  },
+  {
+    "name": "shadowing",
+    "value": 0,
+    "investigative": false
+  },
+  {
+    "name": "stealth",
+    "value": 0,
+    "investigative": false
+  },
+  {
+    "name": "weapons",
+    "value": 0,
+    "investigative": false
+  }
+]

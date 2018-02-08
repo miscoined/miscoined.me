@@ -1,0 +1,18 @@
+{
+  "player": "",
+  "name": "",
+  "age": "",
+  "nationality": "",
+  "occupation": "",
+  "health": 1,
+  "stability": 1,
+  "sanity": 4,
+  "investigative": [],
+  "general": [],
+  "suspicion": 0,
+  "drive": "",
+  "sourcesOfStability": [],
+  "pillarsOfSanity": [],
+  "contacts": [],
+  "inventory": []
+}
