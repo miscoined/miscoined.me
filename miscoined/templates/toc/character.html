@@ -139,6 +139,13 @@
        return character.occupation().abilities.required.indexOf(self.name) != -1;
      });
 
+     self.proficientOption = ko.pureComputed(function() {
+       return character.occupation().abilities.choices.some(choice =>
+         (choice.criteria.length == 0 || choice.criteria.some(cat => self.category.includes(cat))));
+     });
+
+     self.proficientChecked = ko.observable(false);
+
      if (self.name == 'languages') {
        self.value.subscribe(function(value) {
          var diff = Math.abs(value - self.languages().length);
@@ -152,6 +159,7 @@
          }
        });
      }
+     console.log("finished");
    }
 
    function Character() {
@@ -167,20 +175,32 @@
        },
        'investigative': {
          create: function(options) {
+           options.data.category = ["investigative", options.data.category];
            return new Ability(options.data);
          }
        },
        'general': {
          create: function(options) {
+           options.data.category = ["general"];
            return new Ability(options.data);
          }
        }
-     }
+     };
 
      self.occupations = {{ occupations|tojson }};
 
      var character = {{ character|tojson }};
      ko.mapping.fromJS(character, mapping, this);
+
+     self.occupation.subscribe(function(occupation) {
+       console.log(occupation);
+       self.investigative().forEach(function(ability) {
+         ability.proficientChecked(occupation.abilities.required.includes(ability.name));
+       });
+       self.general().forEach(function(ability) {
+         ability.proficientChecked(occupation.abilities.required.includes(ability.name));
+       });
+     });
 
      self.constrainCredit = function(value) {
        return Math.min(Math.max(value(), self.occupation().credit.min),
@@ -189,7 +209,7 @@
 
      var categories = {{ investigative_categories|tojson }};
      self.investigativeCategories = categories.map(
-       cat => ({name: cat, abilities: self.investigative().filter(a => a.category == cat)}));
+       cat => ({name: cat, abilities: self.investigative().filter(a => a.category[1] == cat)}));
 
      self.submit = function() {
        $.ajax ({
@@ -205,6 +225,7 @@
          }
        });
      };
+
 
    };
 
