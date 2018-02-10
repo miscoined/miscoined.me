@@ -1,7 +1,7 @@
 <li>
   <label class="ability" data-bind="text: $data.name,
                 css: {'general-investigative': $data.investigative,
-                'proficient': $root.hasAbility($data.name)},
+                'proficient': $data.proficientRequired},
                 attr: {for: $data.jsonName}"></label>
 
   <!-- ko if: $data.name != 'credit rating' -->

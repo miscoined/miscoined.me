@@ -70,8 +70,8 @@
         <legend>Investigative</legend>
         <!-- ko foreach: investigativeCategories -->
         <fieldset>
-          <legend data-bind="text: $data"></legend>
-          <ul data-bind="template: {name: 'ability-template', foreach: $root.forCategory($data)}"></ul>
+          <legend data-bind="text: name"></legend>
+          <ul data-bind="template: {name: 'ability-template', foreach: abilities}"></ul>
         </fieldset>
         <!-- /ko -->
       </fieldset>
@@ -133,25 +133,28 @@
 
      ko.mapping.fromJS(ability, mapping, self);
 
+     self.jsonName = 'ability-' + self.name.replace(/\s+/g, '');
+
+     self.proficientRequired = ko.pureComputed(function() {
+       return character.occupation().abilities.required.indexOf(self.name) != -1;
+     });
+
      if (self.name == 'languages') {
        self.value.subscribe(function(value) {
          var diff = Math.abs(value - self.languages().length);
          if (value > self.languages().length) {
-           for (var i = 0; i < diff; i++) {
-             self.languages.push({name: ko.observable()});
-           }
+           var newLanguages = ko.utils.arrayMap(new Array(diff), function(i) {
+             return {name: ko.observable()};
+           });
+           self.languages.push.apply(self.languages, newLanguages);
          } else if (value < self.languages().length) {
-           for (var i = 0; i < diff; i++) {
-             self.languages.pop()
-           }
+           self.languages.splice(self.languages().length - diff, diff);
          }
        });
      }
-
-     self.jsonName = 'ability-' + self.name.replace(/\s+/g, '');
    }
 
-   function CharactersViewModel() {
+   function Character() {
      var self = this;
 
      var mapping = {
@@ -179,21 +182,14 @@
      var character = {{ character|tojson }};
      ko.mapping.fromJS(character, mapping, this);
 
-     self.hasAbility = function(ability) {
-       return self.occupation().abilities.includes(ability);
-     };
-
      self.constrainCredit = function(value) {
-       return Math.min(Math.max(value, self.occupation().credit.min),
+       return Math.min(Math.max(value(), self.occupation().credit.min),
                        self.occupation().credit.max);
      };
 
-     self.investigativeCategories = {{ investigative_categories|tojson }};
-     self.forCategory = function(category) {
-       return self.investigative().filter(function(ability) {
-         return ability.category == category;
-       });
-     };
+     var categories = {{ investigative_categories|tojson }};
+     self.investigativeCategories = categories.map(
+       cat => ({name: cat, abilities: self.investigative().filter(a => a.category == cat)}));
 
      self.submit = function() {
        $.ajax ({
@@ -212,6 +208,7 @@
 
    };
 
-   ko.applyBindings(new CharactersViewModel());
+   var character = new Character();
+   ko.applyBindings(character);
   </script>
 {% endblock %}
