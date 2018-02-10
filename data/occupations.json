@@ -18,7 +18,7 @@
             "choices": [
                 {
                     "criteria": ["investigative"],
-                    "count": 4
+                    "count": 2
                 }
             ]
         }
@@ -44,6 +44,27 @@
                     "count": 3
                 }
             ]
+        }
+    },
+    {
+        "name": "doctor",
+        "credit": {
+            "min": 4,
+            "max": 6
+        },
+        "abilities": {
+            "required": [
+                "accounting",
+                "biology",
+                "first aid",
+                "forensics",
+                "languages",
+                "medicine",
+                "pharmacy",
+                "assess honesty",
+                "reassurance"
+            ],
+            "choices": []
         }
     }
 ]
