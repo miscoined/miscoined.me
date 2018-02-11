@@ -5,10 +5,8 @@
 {% block head %}
   {{ super() }}
   <link rel="stylesheet" href="{{ url_for('static', filename='css/toc.css') }}" />
-  <script src="{{ url_for('static', filename='js/jquery-3.3.1-min.js') }}"></script>
-  <script src="{{ url_for('static', filename='js/knockout-3.4.2-min.js') }}"></script>
-  <script src="{{ url_for('static', filename='js/knockout.mapping-2.4.1-min.js') }}"></script>
-  <script src="{{ url_for('static', filename='js/knockout.validation-2.0.3-min.js') }}"></script>
+  <script data-main="{{ url_for('static', filename='toc/init.js') }}"
+          src="{{ url_for('static', filename='toc/lib/require-2.3.5-min.js') }}"></script>
 {% endblock %}
 
 {% block content %}
@@ -115,5 +113,4 @@
     {% include "toc/_ability_template.html" %}
   </script>
 
-  <script src="{{ url_for('static', filename='toc/app.js' )}}"></script>
 {% endblock %}
