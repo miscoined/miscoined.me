@@ -189,6 +189,12 @@
      var character = {{ character|tojson }};
      ko.mapping.fromJS(character, mapping, this);
 
+     self.proficiencies = ko.pureComputed(function() {
+       return self.investigative().filter(a => a.proficientChecked()).concat(
+         self.general().filter(a => a.proficientChecked())
+       );
+     });
+
      self.occupation.subscribe(function(occupation) {
        self.investigative().forEach(function(ability) {
          ability.proficientChecked(occupation.abilities.required.includes(ability.name));
@@ -221,8 +227,6 @@
          }
        });
      };
-
-
    };
 
    var character = new Character();

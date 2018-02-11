@@ -17,7 +17,6 @@
             ],
             "options": {
                 "categories": ["investigative"],
-                "chosen": [],
                 "allowed": [],
                 "count": 2
             }
@@ -40,7 +39,6 @@
             ],
             "options": {
                 "categories": null,
-                "chosen": [],
                 "allowed": [],
                 "count": 3
             }
@@ -66,7 +64,6 @@
             ],
             "options": {
                 "categories": [],
-                "chosen": [],
                 "allowed": [],
                 "count": 0
             }
