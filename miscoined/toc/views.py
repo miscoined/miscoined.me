@@ -9,21 +9,24 @@ from miscoined.toc.character import Character
 @app.route("/toc")
 @app.route("/toc/")
 def landing():
-    return redirect(url_for('character_create'))
+    return redirect(url_for('character'))
 
 
-@app.route("/toc/character", methods=["GET", "POST"])
+@app.route("/toc/character")
+def character():
+    return render_template("toc/character.html")
+
+
+@app.route("/toc/api/character", methods=["GET", "POST"])
 def character_create():
 
     if request.method == "POST":
         Character.put(request.get_json())
+        return redirect(url_for('character_create'))
 
-    return render_template(
-        'toc/character.html',
-        character=Character.new(),
-    )
+    return jsonify(Character.new())
 
 
-@app.route("/toc/occupations")
+@app.route("/toc/api/occupations")
 def occupations():
     return jsonify(data.occupations())
