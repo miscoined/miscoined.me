@@ -207,11 +207,16 @@
 
      self.occupations = {{ occupations|tojson }};
 
-     var categories = {{ investigative_categories|tojson }};
-     self.investigativeCategories = categories.map(
-       cat => ({name: cat,
-                abilities: self.abilities().filter(a => a.category[0] == "investigative"
-                                                   && a.category[1] == cat)}));
+     self.investigativeCategories = [];
+     self.abilities().forEach(function(ability) {
+       if (ability.category[0] == "general") return;
+       var category = self.investigativeCategories.find(cat => cat.name == ability.category[1]);
+       if (category == undefined) {
+         category = {name: ability.category[1], abilities: []};
+         self.investigativeCategories.push(category)
+       }
+       category.abilities.push(ability)
+     });
 
      self.proficiencies = ko.pureComputed(function() {
        return self.abilities().filter(a => a.proficientChecked());
