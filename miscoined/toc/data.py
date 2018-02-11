@@ -17,15 +17,41 @@ def put_file(directory, filename, data):
 
 
 def occupations():
-    return load_file("OCCUPATIONS_FILE")
+    occupations = load_file("OCCUPATIONS_FILE")
+    for occupation in occupations:
+        options = occupation["abilities"]["options"]
+        categories = options["categories"]
+        del options["categories"]
+
+        if categories is None:
+            options["allowed"] = [ability["name"] for
+                                  ability in all_abilities()]
+            continue
+
+        for category in categories:
+            options["allowed"].extend([
+                ability["name"] for ability in all_abilities()
+                if category in ability["category"]
+            ])
+    return occupations
+
+
+def all_abilities():
+    return general_abilities() + investigative_abilities()
 
 
 def general_abilities():
-    return load_file("GENERAL_ABILITIES_FILE")
+    abilities = load_file("GENERAL_ABILITIES_FILE")
+    for ability in abilities:
+        ability["category"] = ["general"]
+    return abilities
 
 
 def investigative_abilities():
-    return load_file("INVESTIGATIVE_ABILITIES_FILE")
+    abilities = load_file("INVESTIGATIVE_ABILITIES_FILE")
+    for ability in abilities:
+        ability["category"] = ["investigative", ability["category"]]
+    return abilities
 
 
 def blank_character():

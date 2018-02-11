@@ -8,6 +8,7 @@
   <script src="{{ url_for('static', filename='js/jquery-3.3.1-min.js') }}"></script>
   <script src="{{ url_for('static', filename='js/knockout-3.4.2-min.js') }}"></script>
   <script src="{{ url_for('static', filename='js/knockout.mapping-2.4.1-min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/knockout.validation-2.0.3-min.js') }}"></script>
 {% endblock %}
 
 {% block content %}
@@ -140,8 +141,7 @@
      });
 
      self.proficientOption = ko.pureComputed(function() {
-       return character.occupation().abilities.choices.some(choice =>
-         (choice.criteria.length == 0 || choice.criteria.some(cat => self.category.includes(cat))));
+       return character.occupation().abilities.options.allowed.includes(self.name);
      });
 
      self.proficientChecked = ko.observable(false);
@@ -159,7 +159,6 @@
          }
        });
      }
-     console.log("finished");
    }
 
    function Character() {
@@ -175,13 +174,11 @@
        },
        'investigative': {
          create: function(options) {
-           options.data.category = ["investigative", options.data.category];
            return new Ability(options.data);
          }
        },
        'general': {
          create: function(options) {
-           options.data.category = ["general"];
            return new Ability(options.data);
          }
        }
@@ -193,7 +190,6 @@
      ko.mapping.fromJS(character, mapping, this);
 
      self.occupation.subscribe(function(occupation) {
-       console.log(occupation);
        self.investigative().forEach(function(ability) {
          ability.proficientChecked(occupation.abilities.required.includes(ability.name));
        });
