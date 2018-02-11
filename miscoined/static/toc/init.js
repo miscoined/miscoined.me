@@ -1,6 +1,7 @@
 require.config({
     baseUrl: "/static/toc/",
     paths: {
+        text: "lib/require.text-2.0.15",
         jquery: "lib/jquery-3.3.1-min",
         knockout: "lib/knockout-3.4.2-min",
         komapping: "lib/knockout.mapping-2.4.1-min",
@@ -25,6 +26,11 @@ require(
         ko.validation.init({
             insertMessages: false,
             decorateInputElement: true
+        });
+
+        ko.components.register("list-input", {
+            viewModel: { require: 'components/list-input'},
+            template: { require: 'text!components/list-input.html' }
         });
 
         ko.applyBindings(character);

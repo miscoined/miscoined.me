@@ -6,7 +6,7 @@
   <label class="ability" data-bind="text: name,
                 css: {'general-investigative': category.includes('general') && investigative,
                 'proficient': proficientRequired},
-                attr: {for: jsonName}"></label>
+                attr: {for: $data.jsonName}"></label>
 
   <!-- ko if: name != 'credit rating' -->
   <input
@@ -31,7 +31,7 @@
   <ul data-bind="foreach: languages()">
     <li>
       <input data-bind="value: name(),
-                        attr: {name: jsonName + '-' + $index}"
+                        attr: {name: $data.jsonName + '-' + $index}"
              type="text" />
     </li>
   </ul>

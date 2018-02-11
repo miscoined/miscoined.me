@@ -97,13 +97,21 @@
         </li>
       </ol>
 
-      {{ dynamic_fields("sourcesOfStability", "Sources of Stability", "Source of Stability") }}
-      {{ dynamic_fields("pillarsOfSanity", "Pillars Of Sanity", "Pillar Of Sanity") }}
-      {{ dynamic_fields("contacts", "Contacts", "Contact") }}
+      <list-input params="labelPlural: 'Sources of Stability',
+                          <!-- labelSingular: 'Source of Stability',
+                          list: sourcesOfStability"></list-input>
+      <list-input params="labelPlural: 'Pillar of Sanity',
+                          labelSingular: 'Pillars of Sanity',
+                          list: pillarsOfSanity"></list-input>
+      <list-input params="labelPlural: 'Contact',
+                          labelSingular: 'Contacts',
+                          list: contacts"></list-input>
 
     </fieldset>
 
-    {{ dynamic_fields("inventory", "Inventory", "Inventory Item") }}
+    <list-input params="labelPlural: 'Inventory',
+                        labelSingular: 'Inventory Item',
+                        list: inventory"></list-input>
 
     <input type="submit" value="Submit" data-bind="click: submit" />
 
