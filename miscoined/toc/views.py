@@ -1,4 +1,4 @@
-from flask import render_template, url_for, redirect, request
+from flask import render_template, url_for, redirect, request, jsonify
 
 from miscoined import app
 
@@ -20,6 +20,10 @@ def character_create():
 
     return render_template(
         'toc/character.html',
-        occupations=data.occupations(),
         character=Character.new(),
     )
+
+
+@app.route("/toc/occupations")
+def occupations():
+    return jsonify(data.occupations())

@@ -205,7 +205,15 @@
      var character = {{ character|tojson }};
      ko.mapping.fromJS(character, mapping, this);
 
-     self.occupations = {{ occupations|tojson }};
+     $.ajax({
+       url: "/toc/occupations",
+       type: "GET",
+       contentType: "application/json",
+       async: false,
+       success: function(data) {
+         self.occupations = data;
+       }
+     });
 
      self.investigativeCategories = [];
      self.abilities().forEach(function(ability) {
