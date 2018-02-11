@@ -9,9 +9,8 @@ class Character:
     @classmethod
     def new(cls):
         """Return a new trail of cthulu character dict."""
-        character = data.blank_character()
-        character['investigative'] = data.investigative_abilities()
-        character['general'] = data.general_abilities()
+        character = data.load_file("BLANK_CHARACTER_FILE")
+        character["abilities"] = data.abilities()
         return character
 
     @classmethod

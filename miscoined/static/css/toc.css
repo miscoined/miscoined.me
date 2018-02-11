@@ -2,10 +2,11 @@ legend, .ability {
   text-transform: capitalize;
 }
 
-.ability.proficient {
-  font-weight: bold;
-}
-
 .ability.general-investigative:after {
   content: '*';
+}
+
+input[type="checkbox"].validationElement:before {
+  content: "";
+  border: 1px solid firebrick;
 }

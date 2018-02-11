@@ -79,7 +79,8 @@
 
       <fieldset>
         <legend>General</legend>
-        <ul data-bind="template: {name: 'ability-template', foreach: general()}"></ul>
+        <ul data-bind="template: {name: 'ability-template',
+                       foreach: abilities().filter(a => a.category[0] == 'general')}"></ul>
       </fieldset>
 
     </fieldset>
@@ -115,6 +116,11 @@
   </script>
 
   <script>
+   ko.validation.init({
+     insertMessages: false,
+     decorateInputElement: true
+   });
+
    function Ability(ability) {
      var self = this;
 
@@ -144,7 +150,19 @@
        return character.occupation().abilities.options.allowed.includes(self.name);
      });
 
-     self.proficientChecked = ko.observable(false);
+     self.proficientChecked = ko.observable(false).extend({
+       validation: {
+         validator: function(isChecked) {
+           return (
+             character == undefined ||
+             self.proficientRequired() ||
+             !isChecked ||
+             character.abilities().filter(
+               a => !a.proficientRequired() && a.proficientChecked()).length ==
+                 character.occupation().abilities.options.count);
+         }
+       }
+     });
 
      if (self.name == 'languages') {
        self.value.subscribe(function(value) {
@@ -177,12 +195,7 @@
                                  abilities: options.data.abilities})
          }
        },
-       'investigative': {
-         create: function(options) {
-           return new Ability(options.data);
-         }
-       },
-       'general': {
+       'abilities': {
          create: function(options) {
            return new Ability(options.data);
          }
@@ -196,19 +209,16 @@
 
      var categories = {{ investigative_categories|tojson }};
      self.investigativeCategories = categories.map(
-       cat => ({name: cat, abilities: self.investigative().filter(a => a.category[1] == cat)}));
+       cat => ({name: cat,
+                abilities: self.abilities().filter(a => a.category[0] == "investigative"
+                                                   && a.category[1] == cat)}));
 
      self.proficiencies = ko.pureComputed(function() {
-       return self.investigative().filter(a => a.proficientChecked()).concat(
-         self.general().filter(a => a.proficientChecked())
-       );
+       return self.abilities().filter(a => a.proficientChecked());
      });
 
      self.occupation.subscribe(function(occupation) {
-       self.investigative().forEach(function(ability) {
-         ability.proficientChecked(occupation.abilities.required.includes(ability.name));
-       });
-       self.general().forEach(function(ability) {
+       self.abilities().forEach(function(ability) {
          ability.proficientChecked(occupation.abilities.required.includes(ability.name));
        });
      });

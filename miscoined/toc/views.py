@@ -21,6 +21,7 @@ def character_create():
         'toc/character.html',
         occupations=data.occupations(),
         investigative_categories=list(
-            set(i['category'][1] for i in data.investigative_abilities())),
+            set(i['category'][1] for i in data.abilities()
+                if "investigative" in i["category"])),
         character=Character.new(),
     )

@@ -25,34 +25,22 @@ def occupations():
 
         if categories is None:
             options["allowed"] = [ability["name"] for
-                                  ability in all_abilities()]
+                                  ability in abilities()]
             continue
 
         for category in categories:
             options["allowed"].extend([
-                ability["name"] for ability in all_abilities()
+                ability["name"] for ability in abilities()
                 if category in ability["category"]
             ])
     return occupations
 
 
-def all_abilities():
-    return general_abilities() + investigative_abilities()
-
-
-def general_abilities():
-    abilities = load_file("GENERAL_ABILITIES_FILE")
-    for ability in abilities:
+def abilities():
+    general = load_file("GENERAL_ABILITIES_FILE")
+    for ability in general:
         ability["category"] = ["general"]
-    return abilities
-
-
-def investigative_abilities():
-    abilities = load_file("INVESTIGATIVE_ABILITIES_FILE")
-    for ability in abilities:
+    investigative = load_file("INVESTIGATIVE_ABILITIES_FILE")
+    for ability in investigative:
         ability["category"] = ["investigative", ability["category"]]
-    return abilities
-
-
-def blank_character():
-    return load_file("BLANK_CHARACTER_FILE")
+    return general + investigative
