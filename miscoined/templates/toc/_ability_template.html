@@ -19,7 +19,7 @@
 
   <!-- ko if: name == 'credit rating' -->
   <input
-    data-bind="value: $root.constrainCredit(value), attr: {
+    data-bind="value: valueConstrained, attr: {
                name: jsonName,
                id: jsonName,
                min: $root.occupation().credit.min,

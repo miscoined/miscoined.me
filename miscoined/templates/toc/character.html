@@ -158,6 +158,11 @@
            self.languages.splice(self.languages().length - diff, diff);
          }
        });
+     } else if (self.name == 'credit rating') {
+       self.valueConstrained = ko.pureComputed(function() {
+         return Math.min(Math.max(self.value(), character.occupation().credit.min),
+                         character.occupation().credit.max);
+       });
      }
    }
 
@@ -184,10 +189,14 @@
        }
      };
 
-     self.occupations = {{ occupations|tojson }};
-
      var character = {{ character|tojson }};
      ko.mapping.fromJS(character, mapping, this);
+
+     self.occupations = {{ occupations|tojson }};
+
+     var categories = {{ investigative_categories|tojson }};
+     self.investigativeCategories = categories.map(
+       cat => ({name: cat, abilities: self.investigative().filter(a => a.category[1] == cat)}));
 
      self.proficiencies = ko.pureComputed(function() {
        return self.investigative().filter(a => a.proficientChecked()).concat(
@@ -204,29 +213,21 @@
        });
      });
 
-     self.constrainCredit = function(value) {
-       return Math.min(Math.max(value(), self.occupation().credit.min),
-                       self.occupation().credit.max);
-     };
+   }
 
-     var categories = {{ investigative_categories|tojson }};
-     self.investigativeCategories = categories.map(
-       cat => ({name: cat, abilities: self.investigative().filter(a => a.category[1] == cat)}));
-
-     self.submit = function() {
-       $.ajax ({
-         url: "/toc/character",
-         type: "POST",
-         data: ko.mapping.toJSON(self),
-         contentType: "application/json",
-         success: function(result) {
-           alert("Success");
-         },
-         error: function(result) {
-           alert(result.responseText);
-         }
-       });
-     };
+   Character.prototype.submit = function() {
+     $.ajax ({
+       url: "/toc/character",
+       type: "POST",
+       data: ko.mapping.toJSON(this),
+       contentType: "application/json",
+       success: function(result) {
+         alert("Success");
+       },
+       error: function(result) {
+         alert(result.responseText);
+       }
+     });
    };
 
    var character = new Character();
