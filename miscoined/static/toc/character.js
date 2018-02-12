@@ -101,7 +101,21 @@ define(["jquery", "knockout", "komapping", "kovalidation"], function($, ko, koma
                                                 - self.health() + 1
                                                 - self.stability() + 1
                                                 - self.sanity() + 4);
-                        })
+                        }),
+                        experience: {
+                            available: ko.observable(options.data.experience),
+                            total: ko.pureComputed({
+                                read: function() {
+                                    if (!self.points.available) return 0;
+                                    return self.points.experience.available()
+                                        - self.points.investigative()
+                                        - self.points.general();
+                                },
+                                write: function(value) {
+                                    self.points.experience.available(value);
+                                }
+                            })
+                        }
                     };
                 }
             },
@@ -152,7 +166,6 @@ define(["jquery", "knockout", "komapping", "kovalidation"], function($, ko, koma
         self.hitThreshold = ko.pureComputed(function() {
             return self.abilities().find(a => a.name == "athletics").value >= 8 ? 4 : 3;
         })
-
 
     }
 
