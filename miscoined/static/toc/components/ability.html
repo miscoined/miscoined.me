@@ -14,23 +14,23 @@
                                     min: ability.min ? ability.min : 0,
                                     max: ability.max}" />
 
-  <!-- ko if: name == 'languages' -->
+  <!-- ko if: ability.name == 'languages' -->
   <ul data-bind="foreach: ability.languages()">
     <li>
-      <input data-bind="value: ability.name(),
-                        attr: {name: ability.jsonName + '-' + $index}"
+      <input data-bind="value: name(),
+                        attr: {name: $parent.ability.jsonName + '-' + $index}"
              type="text" />
     </li>
   </ul>
   <!-- /ko -->
 
-  <!-- ko if: name == 'district knowledges' -->
+  <!-- ko if: ability.name == 'district knowledges' -->
   <ul data-bind="foreach: ability.districts">
     <li>
-      <label data-bind="text: ability.name"></label>
-      <input data-bind="value: ability.value, attr: {
-                        name: ability.jsonName + '-' + name,
-                        id: ability.jsonName + '-' + name,
+      <label data-bind="text: name"></label>
+      <input data-bind="value: value, attr: {
+                        name: $parent.ability.jsonName + '-' + name,
+                        id: $parent.ability.jsonName + '-' + name,
                         }"
              type="number"
              min="0" />
