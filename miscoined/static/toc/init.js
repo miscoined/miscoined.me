@@ -33,5 +33,9 @@ require(
             template: { require: 'text!components/list-input.html' }
         });
 
+        ko.components.register("ability", {
+            template: { require: 'text!components/ability.html' }
+        });
+
         ko.applyBindings(character);
     });

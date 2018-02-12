@@ -1,8 +1,7 @@
 define(["jquery", "knockout", "komapping", "kovalidation"], function($, ko, komapping, kovalidation) {
+
     function Ability(ability) {
         var self = this;
-        ko.mapping = komapping;
-        ko.validation = kovalidation;
 
         var mapping = {
             "copy": ["name", "investigative", "category"],
@@ -44,6 +43,15 @@ define(["jquery", "knockout", "komapping", "kovalidation"], function($, ko, koma
             }
         });
 
+        if (self.name == 'credit rating') {
+            self.min = ko.pureComputed(function() {
+                return character.occupation().credit.max;
+            });
+            self.max = ko.pureComputed(function() {
+                return character.occupation().credit.min;
+            })
+        }
+
         if (self.name == 'languages') {
             self.value.subscribe(function(value) {
                 var diff = Math.abs(value - self.languages().length);
@@ -56,13 +64,10 @@ define(["jquery", "knockout", "komapping", "kovalidation"], function($, ko, koma
                     self.languages.splice(self.languages().length - diff, diff);
                 }
             });
-        } else if (self.name == 'credit rating') {
-            self.valueConstrained = ko.pureComputed(function() {
-                return Math.min(Math.max(self.value(), character.occupation().credit.min),
-                                character.occupation().credit.max);
-            });
         }
+
     }
+
     function Character() {
         var self = this;
         ko.mapping = komapping;
@@ -75,9 +80,34 @@ define(["jquery", "knockout", "komapping", "kovalidation"], function($, ko, koma
                                           abilities: options.data.abilities})
                 }
             },
+            "points": {
+                create: function(options) {
+                    var subAbilities = function(category, init) {
+                        return self.abilities().filter(a => a.category[0] == category)
+                            .reduce((acc, a) => acc - parseInt(a.value()) /
+                                    (a.proficientChecked() ? 2 : 1),
+                                    init);
+                    };
+
+                    return {
+                        investigative: ko.pureComputed(function() {
+                            return subAbilities("investigative",
+                                                options.data.investigative,
+                                                + self.occupation().credit.min);
+                        }),
+                        general: ko.pureComputed(function() {
+                            return subAbilities("general",
+                                                options.data.general
+                                                - self.health() + 1
+                                                - self.stability() + 1
+                                                - self.sanity() + 4);
+                        })
+                    };
+                }
+            },
             'abilities': {
                 create: function(options) {
-                    return new Ability(options.data, self);
+                    return new Ability(options.data);
                 }
             }
         };
@@ -119,9 +149,10 @@ define(["jquery", "knockout", "komapping", "kovalidation"], function($, ko, koma
             category.abilities.push(ability)
         });
 
-        self.proficiencies = ko.pureComputed(function() {
-            return self.abilities().filter(a => a.proficientChecked());
-        });
+        self.hitThreshold = ko.pureComputed(function() {
+            return self.abilities().find(a => a.name == "athletics").value >= 8 ? 4 : 3;
+        })
+
 
     }
 

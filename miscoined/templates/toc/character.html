@@ -1,5 +1,3 @@
-{% from "toc/_form.html" import dynamic_fields %}
-
 {% extends "base.html" %}
 
 {% block head %}
@@ -39,6 +37,24 @@
     </ol>
 
     <fieldset>
+      <legend>Points</legend>
+      <ul>
+        <li>
+          <label for="investigative-points">Investigative Points</label>
+          <input type="number" id="investigative-points"
+                 data-bind="value: points.investigative" />
+        </li>
+        <li>
+          <label for="general-points">General Points</label>
+          <input type="number" id="general-points" data-bind="value: points.general" />
+        </li>
+        <!-- <li>
+             <label for="experience-points">Experience Points</label>
+             <input type="number" id="experience-points" data-bind="value: points.experience" />
+             </li> -->
+    </fieldset>
+
+    <fieldset>
       <legend>Stats</legend>
       <ol>
         <li>
@@ -57,7 +73,8 @@
         </li>
         <li>
           <label for="hitthreshold">Hit Threshold</label>
-          <input type="number" id="hitthreshold" readonly />
+          <input type="number" id="hitthreshold"
+                 data-bind="value: hitThreshold" readonly />
         </li>
       </ol>
     </fieldset>
@@ -70,15 +87,18 @@
         <!-- ko foreach: investigativeCategories -->
         <fieldset>
           <legend data-bind="text: name"></legend>
-          <ul data-bind="template: {name: 'ability-template', foreach: abilities}"></ul>
+          <ul data-bind="foreach: abilities">
+            <ability params="ability: $data, character: $root"></ability>
+          </ul>
         </fieldset>
         <!-- /ko -->
       </fieldset>
 
       <fieldset>
         <legend>General</legend>
-        <ul data-bind="template: {name: 'ability-template',
-                       foreach: abilities().filter(a => a.category[0] == 'general')}"></ul>
+        <ul data-bind="foreach: abilities().filter(a => a.category[0] == 'general')">
+          <ability params="ability: $data, character: $root"></ability>
+        </ul>
       </fieldset>
 
     </fieldset>
@@ -98,11 +118,13 @@
       </ol>
 
       <list-input params="labelPlural: 'Sources of Stability',
-                          <!-- labelSingular: 'Source of Stability',
+                          labelSingular: 'Source of Stability',
                           list: sourcesOfStability"></list-input>
+
       <list-input params="labelPlural: 'Pillar of Sanity',
                           labelSingular: 'Pillars of Sanity',
                           list: pillarsOfSanity"></list-input>
+
       <list-input params="labelPlural: 'Contact',
                           labelSingular: 'Contacts',
                           list: contacts"></list-input>
@@ -116,9 +138,5 @@
     <input type="submit" value="Submit" data-bind="click: submit" />
 
   </form>
-
-  <script type="text/html" id="ability-template">
-    {% include "toc/_ability_template.html" %}
-  </script>
 
 {% endblock %}

@@ -14,5 +14,10 @@
   "sourcesOfStability": [],
   "pillarsOfSanity": [],
   "contacts": [],
-  "inventory": []
+  "inventory": [],
+  "points": {
+    "general": 64,
+    "investigative": 16,
+    "experience": 0
+  }
 }
