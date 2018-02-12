@@ -1,52 +1,42 @@
 [
   {
     "name": "accounting",
-    "value": 0,
     "category": "academic"
   },
   {
     "name": "anthropology",
-    "value": 0,
     "category": "academic"
   },
   {
     "name": "archaeology",
-    "value": 0,
     "category": "academic"
   },
   {
     "name": "architecture",
-    "value": 0,
     "category": "academic"
   },
   {
     "name": "art history",
-    "value": 0,
     "category": "academic"
   },
   {
     "name": "biology",
-    "value": 0,
     "category": "academic"
   },
   {
     "name": "correspondance",
-    "value": 0,
     "category": "academic"
   },
   {
     "name": "cthulu mythos",
-    "value": 0,
     "category": "academic"
   },
   {
     "name": "cryptography",
-    "value": 0,
     "category": "academic"
   },
   {
     "name": "district knowledges",
-    "value": 0,
     "category": "academic",
     "districts": [
       {
@@ -61,163 +51,131 @@
   },
   {
     "name": "geology",
-    "value": 0,
     "category": "academic"
   },
   {
     "name": "history",
-    "value": 0,
     "category": "academic"
   },
   {
     "name": "law",
-    "value": 0,
     "category": "academic"
   },
   {
     "name": "library use",
-    "value": 0,
     "category": "academic"
   },
   {
     "name": "languages",
-    "value": 0,
     "category": "academic",
     "languages": []
   },
   {
     "name": "medicine",
-    "value": 0,
     "category": "academic"
   },
   {
     "name": "occult",
-    "value": 0,
     "category": "academic"
   },
   {
     "name": "physics",
-    "value": 0,
     "category": "academic"
   },
   {
     "name": "theology",
-    "value": 0,
     "category": "academic"
   },
   {
     "name": "bullshit detector",
-    "value": 0,
     "category": "interpersonal"
   },
   {
     "name": "bargain",
-    "value": 0,
     "category": "interpersonal"
   },
   {
     "name": "bureaucracy",
-    "value": 0,
     "category": "interpersonal"
   },
   {
     "name": "cop talk",
-    "value": 0,
     "category": "interpersonal"
   },
   {
     "name": "credit rating",
-    "value": 0,
     "category": "interpersonal"
   },
   {
     "name": "flattery",
-    "value": 0,
     "category": "interpersonal"
   },
   {
     "name": "interrogation",
-    "value": 0,
     "category": "interpersonal"
   },
   {
     "name": "intimidation",
-    "value": 0,
     "category": "interpersonal"
   },
   {
     "name": "oral history",
-    "value": 0,
     "category": "interpersonal"
   },
   {
     "name": "reassurance",
-    "value": 0,
     "category": "interpersonal"
   },
   {
     "name": "streetwise",
-    "value": 0,
     "category": "interpersonal"
   },
   {
     "name": "art",
-    "value": 0,
     "category": "technical"
   },
   {
     "name": "astronomy",
-    "value": 0,
     "category": "technical"
   },
   {
     "name": "chemistry",
-    "value": 0,
     "category": "technical"
   },
   {
     "name": "craft",
-    "value": 0,
     "category": "technical"
   },
   {
     "name": "dreaming",
-    "value": 0,
     "category": "technical"
   },
   {
     "name": "evidence collection",
-    "value": 0,
     "category": "technical"
   },
   {
     "name": "forgery",
-    "value": 0,
     "category": "technical"
   },
   {
     "name": "forensics",
-    "value": 0,
     "category": "technical"
   },
   {
     "name": "locksmith",
-    "value": 0,
     "category": "technical"
   },
   {
     "name": "outdoorsman",
-    "value": 0,
     "category": "technical"
   },
   {
     "name": "pharmacy",
-    "value": 0,
     "category": "technical"
   },
   {
     "name": "photography",
-    "value": 0,
     "category": "technical"
   }
 ]

@@ -37,10 +37,13 @@ def occupations():
 
 
 def abilities():
-    general = load_file("GENERAL_ABILITIES_FILE")
-    for ability in general:
+    abilities = load_file("GENERAL_ABILITIES_FILE")
+    for ability in abilities:
         ability["category"] = ["general"]
-    investigative = load_file("INVESTIGATIVE_ABILITIES_FILE")
-    for ability in investigative:
+    for ability in load_file("INVESTIGATIVE_ABILITIES_FILE"):
         ability["category"] = ["investigative", ability["category"]]
-    return general + investigative
+        abilities.append(ability)
+    for ability in abilities:
+        ability["value"] = 0
+        ability["temp"] = 0
+    return abilities
