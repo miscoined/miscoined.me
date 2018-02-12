@@ -14,6 +14,13 @@
                                     min: ability.min ? ability.min : 0,
                                     max: ability.max}" />
 
+  <input type="number"
+         min="0"
+         data-bind="value: ability.temp,
+                            attr: {name: ability.jsonName + '-temp',
+                                    id: ability.jsonName + '-temp',
+                                    max: ability.value}" />
+
   <!-- ko if: ability.name == 'languages' -->
   <ul data-bind="foreach: ability.languages()">
     <li>
@@ -31,6 +38,10 @@
       <input data-bind="value: value, attr: {
                         name: $parent.ability.jsonName + '-' + name,
                         id: $parent.ability.jsonName + '-' + name,
+                        max: $parent.ability.districts()
+                                        .reduce((acc, d) => acc - parseInt(d.value()),
+                                                  parseInt($parent.ability.value())
+                                                  + parseInt(value()))
                         }"
              type="number"
              min="0" />
