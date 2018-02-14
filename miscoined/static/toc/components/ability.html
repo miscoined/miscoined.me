@@ -7,26 +7,39 @@
                 css: {'general-investigative': ability.investigative},
                 attr: {for: ability.jsonName}"></label>
 
+  <!-- ko if: ability.name != 'languages' -->
   <input type="number"
          data-bind="value: ability.value,
-                            attr: {name: ability.jsonName,
-                                    id: ability.jsonName,
+                            attr: {id: ability.jsonName,
                                     min: ability.min ? ability.min : 0,
                                     max: ability.max}" />
 
   <input type="number"
          min="0"
          data-bind="value: ability.temp,
-                            attr: {name: ability.jsonName + '-temp',
-                                    id: ability.jsonName + '-temp',
+                            attr: {id: ability.jsonName + '-temp',
                                     max: ability.value}" />
+  <!-- /ko -->
 
   <!-- ko if: ability.name == 'languages' -->
+
+  <!-- ko if: character.occupation().languages && character.occupation().languages.length > 0 -->
+  <span>Proficiency</span>
+  <select data-bind="options: character.occupation().languages,
+                     value: ability.proficientLanguage"></select>
+  <!-- /ko -->
+
+  <button type="button" data-bind="click: ability.addLanguage">+</button>
   <ul data-bind="foreach: ability.languages()">
     <li>
-      <input data-bind="value: name(),
-                        attr: {name: $parent.ability.jsonName + '-' + $index}"
-             type="text" />
+      <input type="checkbox"
+             data-bind="checked: $parent.ability.isProficient(name())"
+             disabled />
+      <input type="text" data-bind="value: name" />
+      <button type="button"
+              data-bind="click: function(data, event) {$parent.ability.removeLanguage($index())}">
+        -
+      </button>
     </li>
   </ul>
   <!-- /ko -->
@@ -36,7 +49,6 @@
     <li>
       <label data-bind="text: name"></label>
       <input data-bind="value: value, attr: {
-                        name: $parent.ability.jsonName + '-' + name,
                         id: $parent.ability.jsonName + '-' + name,
                         max: $parent.ability.districts()
                                         .reduce((acc, d) => acc - parseInt(d.value()),

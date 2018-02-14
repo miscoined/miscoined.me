@@ -53,17 +53,20 @@ define(["jquery", "knockout", "komapping", "kovalidation"], function($, ko, koma
         }
 
         if (self.name == 'languages') {
-            self.value.subscribe(function(value) {
-                var diff = Math.abs(value - self.languages().length);
-                if (value > self.languages().length) {
-                    var newLanguages = ko.utils.arrayMap(new Array(diff), function(i) {
-                        return {name: ko.observable()};
-                    });
-                    self.languages.push.apply(self.languages, newLanguages);
-                } else if (value < self.languages().length) {
-                    self.languages.splice(self.languages().length - diff, diff);
-                }
+            self.value = ko.pureComputed(function() {
+                return self.languages().reduce(
+                    (acc, l) => acc + self.isProficient(l.name) ? 0.5 : 1, 0);
             });
+            self.addLanguage = function() {
+                self.languages.push({name: ko.observable()});
+            };
+            self.removeLanguage = function(index) {
+                self.languages.splice(index, 1);
+            };
+            self.isProficient = function(language) {
+                return self.proficientLanguage() == language || self.proficientChecked();
+            }
+            self.proficientLanguage = ko.observable();
         }
 
     }

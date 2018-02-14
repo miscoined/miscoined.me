@@ -24,15 +24,11 @@
         <input type="number" id="age" data-bind="value: age" />
       </li>
       <li>
-        <label for="name">Nationality</label>
+        <label for="nationality">Nationality</label>
         <input type="text" id="nationality" data-bind="value: nationality" />
       </li>
       <li>
-        <select
-          name="occupation"
-          data-bind="options: occupations,
-                optionsText: 'name',
-                value: occupation"></select>
+        <select data-bind="options: occupations, optionsText: 'name', value: occupation"></select>
       </li>
     </ol>
 
