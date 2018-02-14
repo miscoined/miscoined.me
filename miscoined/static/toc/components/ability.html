@@ -35,7 +35,7 @@
       <input type="checkbox"
              data-bind="checked: $parent.ability.isProficient(name())"
              disabled />
-      <input type="text" data-bind="value: name" />
+      <input type="text" data-bind="attr: {'aria-label': 'Language ' + $index()}, value: name" />
       <button type="button"
               data-bind="click: function(data, event) {$parent.ability.removeLanguage($index())}">
         -

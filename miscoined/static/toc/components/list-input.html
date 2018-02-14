@@ -4,9 +4,9 @@
   <ul data-bind="foreach: list()">
     <li>
       <input type="text"
-             data-bind="attr: {'aria-label': $parent.labelSingular + ' ' + $index},
+             data-bind="attr: {'aria-label': $parent.labelSingular + ' ' + $index()},
                                  value: value()" />
-      <button type="button" data-bind="click: function(data, event) {$parent.removeItem($index)}">
+      <button type="button" data-bind="click: function(data, event) {$parent.removeItem($index())}">
         -
       </button>
     </li>
