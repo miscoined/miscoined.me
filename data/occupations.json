@@ -45,11 +45,42 @@
         }
     },
     {
+        "name": "clergy",
+        "credit": {
+            "min": 2,
+            "max": 5
+        },
+        "languages": [
+            "latin",
+            "greek",
+            "aramaic",
+            "hebrew"
+        ],
+        "abilities": {
+            "required": [
+                "history",
+                "library use",
+                "psychoanalysis",
+                "bullshit detector",
+                "reassurance",
+                "theology"
+            ],
+            "options": {
+                "categories": ["interpersonal"],
+                "allowed": [],
+                "count": 1
+            }
+        }
+    },
+    {
         "name": "doctor",
         "credit": {
             "min": 4,
             "max": 6
         },
+        "languages": [
+            "latin"
+        ],
         "abilities": {
             "required": [
                 "accounting",
