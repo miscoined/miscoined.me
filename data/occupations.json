@@ -1,5 +1,28 @@
 [
     {
+        "name": "alienist",
+        "credit": {
+            "min": 3,
+            "max": 4
+        },
+        "languages": ["german", "latin"]
+        "abilities": {
+            "required": [
+                "biology",
+                "library use",
+                "medicine",
+                "pharmacy",
+                "psychoanalysis",
+                "bullshit detector"
+            ],
+            "options": {
+                "categories": ["interpersonal"],
+                "allowed": [],
+                "count": 2
+            }
+        }
+    },
+    {
         "name": "antiquarian",
         "credit": {
             "min": 2,
