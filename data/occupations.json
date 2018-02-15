@@ -5,7 +5,7 @@
             "min": 3,
             "max": 4
         },
-        "languages": ["german", "latin"]
+        "languages": ["german", "latin"],
         "abilities": {
             "required": [
                 "biology",
@@ -17,7 +17,6 @@
             ],
             "options": {
                 "categories": ["interpersonal"],
-                "allowed": [],
                 "count": 2
             }
         }
@@ -40,7 +39,6 @@
             ],
             "options": {
                 "categories": ["investigative"],
-                "allowed": [],
                 "count": 2
             }
         }
@@ -61,8 +59,6 @@
                 "bullshit detector"
             ],
             "options": {
-                "categories": null,
-                "allowed": [],
                 "count": 3
             }
         }
@@ -90,7 +86,6 @@
             ],
             "options": {
                 "categories": ["interpersonal"],
-                "allowed": [],
                 "count": 1
             }
         }
@@ -101,9 +96,7 @@
             "min": 4,
             "max": 6
         },
-        "languages": [
-            "latin"
-        ],
+        "languages": ["latin"],
         "abilities": {
             "required": [
                 "accounting",
@@ -114,12 +107,7 @@
                 "pharmacy",
                 "assess honesty",
                 "reassurance"
-            ],
-            "options": {
-                "categories": [],
-                "allowed": [],
-                "count": 0
-            }
+            ]
         }
     }
 ]

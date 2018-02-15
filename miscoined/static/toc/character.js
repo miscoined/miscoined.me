@@ -15,7 +15,7 @@ define(["jquery", "knockout", "komapping", "kovalidation"], function($, ko, koma
                     return {name: options.data.name, value: ko.observable(options.data.value)};
                 }
             }
-        }
+        };
 
         ko.mapping.fromJS(ability, mapping, self);
 
@@ -26,7 +26,18 @@ define(["jquery", "knockout", "komapping", "kovalidation"], function($, ko, koma
         });
 
         self.proficientOption = ko.pureComputed(function() {
-            return character.occupation().abilities.options.allowed.includes(self.name);
+            return character.occupation().abilities.options
+                && character.occupation().abilities.options.allowed.includes(self.name);
+        });
+
+        self.proficient = ko.pureComputed({
+            read: function() {
+                return self.proficientRequired() ||
+                    self.proficientOption && self.proficientChecked();
+            },
+            write: function(isChecked) {
+                self.proficientChecked(isChecked);
+            }
         });
 
         self.proficientChecked = ko.observable(false).extend({
@@ -34,10 +45,9 @@ define(["jquery", "knockout", "komapping", "kovalidation"], function($, ko, koma
                 validator: function(isChecked) {
                     return (
                         character == undefined ||
-                            self.proficientRequired() ||
                             !isChecked ||
-                            character.abilities().filter(
-                                a => !a.proficientRequired() && a.proficientChecked()).length ==
+                            character.occupation().abilities.options &&
+                            character.abilities().filter(a => a.proficientChecked()).length ==
                             character.occupation().abilities.options.count);
                 }
             }
@@ -147,12 +157,6 @@ define(["jquery", "knockout", "komapping", "kovalidation"], function($, ko, koma
             success: function(data) {
                 self.occupations = data;
             }
-        });
-
-        self.occupation.subscribe(function(occupation) {
-            self.abilities().forEach(function(ability) {
-                ability.proficientChecked(occupation.abilities.required.includes(ability.name));
-            });
         });
 
         self.investigativeCategories = [];
