@@ -39,14 +39,17 @@
     "name": "district knowledges",
     "category": "academic",
     "districts": [
-      {
-        "name": "university",
-        "value": 0
-      },
-      {
-        "name": "old arkham",
-        "value": 0
-      }
+      "dunwich", 
+      "northside",
+      "chinatown",
+      "kingsport",
+      "train station",
+      "sentinal hill",
+      "innsmouth",
+      "old arkham",
+      "westheath",
+      "university district",
+      "salamander fields"
     ]
   },
   {
