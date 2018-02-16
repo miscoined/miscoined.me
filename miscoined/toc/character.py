@@ -14,10 +14,7 @@ class Character:
         return character
 
     @classmethod
-    def put(cls, char):
+    def put(cls, char, name=None):
         """Put character data into a character file."""
-        data.put_file(
-            'CHARACTER_DIR',
-            "".join(f"{char['player']}_{char['name']}.json".split()).lower(),
-            char
-        )
+        data.put_file('CHARACTER_DIR',
+                      "".join(f"{char['name']}.json".split()).lower(), char)

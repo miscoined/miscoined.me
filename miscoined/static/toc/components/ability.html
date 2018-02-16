@@ -23,9 +23,9 @@
 
   <!-- ko if: ability.name == 'languages' -->
 
-  <!-- ko if: character.occupation().languages && character.occupation().languages.length > 0 -->
+  <!-- ko if: occupation().languages && occupation().languages.length > 0 -->
   <span>Proficiency</span>
-  <select data-bind="options: character.occupation().languages,
+  <select data-bind="options: occupation().languages,
                      value: ability.proficientLanguage"></select>
   <!-- /ko -->
 
@@ -50,10 +50,8 @@
       <label data-bind="text: name"></label>
       <input data-bind="value: value, attr: {
                         id: $parent.ability.jsonName + '-' + name,
-                        max: $parent.ability.districts()
-                                        .reduce((acc, d) => acc - parseInt(d.value()),
-                                                  parseInt($parent.ability.value())
-                                                  + parseInt(value()))
+                        max: parseFloat($parent.ability.value())
+                             - $parent.districtSum() + parseFloat(value())
                         }"
              type="number"
              min="0" />

@@ -1,0 +1,127 @@
+<form action="/toc" method="POST">
+  <ol>
+    <li>
+      <label for="player">Player</label>
+      <input type="text" id="player" data-bind="value: player" />
+    </li>
+    <li>
+      <label for="name">Name</label>
+      <input type="text" id="name" data-bind="value: name" />
+    </li>
+    <li>
+      <label for="age">Age</label>
+      <input type="number" id="age" data-bind="value: age" />
+    </li>
+    <li>
+      <label for="nationality">Nationality</label>
+      <input type="text" id="nationality" data-bind="value: nationality" />
+    </li>
+    <li>
+      <select data-bind="options: $root.occupations, optionsText: 'name', value: occupation"></select>
+    </li>
+  </ol>
+
+  <fieldset>
+    <legend>Points</legend>
+    <ul>
+      <li>
+        <label for="investigative-points">Investigative Points</label>
+        <input type="number" id="investigative-points"
+               data-bind="value: points.investigative" />
+      </li>
+      <li>
+        <label for="general-points">General Points</label>
+        <input type="number" id="general-points" data-bind="value: points.general" />
+      </li>
+      <li>
+        <label for="experience-points">Experience Points</label>
+        <input type="number" id="experience-points" data-bind="value: points.experience.total" />
+      </li>
+  </fieldset>
+
+  <fieldset>
+    <legend>Stats</legend>
+    <ol>
+      <li>
+        <label for="health">Health</label>
+        <input type="number" id="health" min="1" max="12" data-bind="value: health" />
+      </li>
+      <li>
+        <label for="stability">Stability</label>
+        <input type="number" id="stability" min="1" max="12"
+               data-bind="value: stability" />
+      </li>
+      <li>
+        <label for="sanity">Sanity</label>
+        <input type="number" id="sanity" min="4" max="10"
+               data-bind="value: sanity" />
+      </li>
+      <li>
+        <label for="hitthreshold">Hit Threshold</label>
+        <input type="number" id="hitthreshold"
+               data-bind="value: hitThreshold" readonly />
+      </li>
+    </ol>
+  </fieldset>
+
+  <fieldset>
+    <legend>Abilities</legend>
+
+    <p data-bind="validationMessage: proficiencies"></p>
+
+    <fieldset>
+      <legend>Investigative</legend>
+      <!-- ko foreach: investigativeCategories -->
+      <fieldset>
+        <legend data-bind="text: name"></legend>
+        <ul data-bind="foreach: abilities">
+          <ability params="ability: $data, occupation: $component.occupation"></ability>
+        </ul>
+      </fieldset>
+      <!-- /ko -->
+    </fieldset>
+
+    <fieldset>
+      <legend>General</legend>
+      <ul data-bind="foreach: abilities.filter(a => a.category[0] == 'general')">
+        <ability params="ability: $data, occupation: $component.occupation"></ability>
+      </ul>
+    </fieldset>
+
+  </fieldset>
+
+  <fieldset>
+    <legend>Character</legend>
+
+    <ol>
+      <li>
+        <label for="name">Drive</label>
+        <input type="text" id="drive" data-bind="value: drive" />
+      </li>
+      <li>
+        <label for="suspicion">Suspicion</label>
+        <input type="number" data-bind="value: suspicion" />
+      </li>
+    </ol>
+
+    <list-input params="labelPlural: 'Sources of Stability',
+                        labelSingular: 'Source of Stability',
+                        list: sourcesOfStability"></list-input>
+
+    <list-input params="labelPlural: 'Pillar of Sanity',
+                        labelSingular: 'Pillars of Sanity',
+                        list: pillarsOfSanity"></list-input>
+
+    <list-input params="labelPlural: 'Contact',
+                        labelSingular: 'Contacts',
+                        list: contacts"></list-input>
+
+  </fieldset>
+
+  <list-input params="labelPlural: 'Inventory',
+                      labelSingular: 'Inventory Item',
+                      list: inventory"></list-input>
+
+  <input type="submit" value="Submit" data-bind="click: submit" />
+
+</form>

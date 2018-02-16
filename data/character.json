@@ -3,7 +3,19 @@
   "name": "",
   "age": "",
   "nationality": "",
-  "occupation": "",
+  "occupation": {
+    "name": "",
+    "credit": {
+      "min": 0,
+      "max": 0
+    },
+    "abilities": {
+      "required": [],
+      "options": {
+        "count": 0
+      }
+    }
+  },
   "health": 1,
   "stability": 1,
   "sanity": 4,

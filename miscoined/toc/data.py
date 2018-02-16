@@ -19,9 +19,7 @@ def put_file(directory, filename, data):
 def occupations():
     occupations = load_file("OCCUPATIONS_FILE")
     for occupation in occupations:
-        if "options" not in occupation["abilities"]:
-            continue
-        options = occupation["abilities"]["options"]
+        options = occupation["abilities"].get("options", {"count": 0})
         categories = set(options.get("categories", ["investigative", "general"]))
         if "categories" in options:
             del options["categories"]
