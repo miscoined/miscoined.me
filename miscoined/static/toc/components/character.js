@@ -23,15 +23,13 @@ define(
             var subAbilities = function(category, init) {
               return self.abilities
                 .filter(a => a.category[0] == category && a.name != "languages")
-                .reduce((acc, a) => acc - parseFloat(a.value()) /
-                        (a.proficient() ? 2 : 1),
-                        init);
+                .reduce((acc, a) => acc - a.cost(), init);
             };
 
             return {
               investigative: ko.pureComputed(function() {
                 return subAbilities("investigative",
-                                    options.data.investigative,
+                                    options.data.investigative
                                     + self.occupation().credit.min
                                     + self.abilities.find(a => a.name == "languages").value());
               }),
@@ -111,7 +109,8 @@ define(
         error: function(result) {
           alert(result.responseText);
         }
-      });
+      }).then(function(result) {alert("Success");},
+              function(result) {alert(result.responseText);});
     };
 
     return Character;

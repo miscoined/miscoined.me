@@ -44,18 +44,16 @@ define(
 
       if (self.name == 'credit rating') {
         self.min = ko.pureComputed(function() {
-          return occupation().credit.max;
+          return occupation().credit.min;
         });
         self.max = ko.pureComputed(function() {
-          return occupation().credit.min;
+          return occupation().credit.max;
         })
-      }
-
-      if (self.name == 'languages') {
-        self.value = ko.pureComputed(function() {
-          return self.languages().reduce(
-            (acc, l) => acc + self.isProficient(l.name) ? 0.5 : 1, 0);
+        self.cost = ko.pureComputed(function() {
+          return parseInt(self.value()) - self.min()
         });
+      } else if (self.name == 'languages') {
+        self.proficientLanguage = ko.observable();
         self.addLanguage = function() {
           self.languages.push({name: ko.observable()});
         };
@@ -65,7 +63,17 @@ define(
         self.isProficient = function(language) {
           return self.proficientLanguage() == language || self.proficient();
         }
-        self.proficientLanguage = ko.observable();
+        self.value = ko.pureComputed(function() {
+          return self.languages().length;
+        });
+        self.cost = ko.pureComputed(function() {
+          return self.languages().reduce(
+            (acc, l) => acc + self.isProficient(l.name) ? 0.5 : 1, 0);
+        });
+      } else {
+        self.cost = ko.pureComputed(function() {
+          return parseInt(self.value()) / (self.proficient() ? 2 : 1);
+        });
       }
 
     }

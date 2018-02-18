@@ -7,13 +7,14 @@
                 css: {'general-investigative': ability.investigative},
                 attr: {for: ability.jsonName}"></label>
 
-  <!-- ko if: ability.name != 'languages' -->
   <input type="number"
          data-bind="value: ability.value,
                             attr: {id: ability.jsonName,
-                                    min: ability.min ? ability.min : 0,
-                                    max: ability.max}" />
+                                   title: ability.cost,
+                                   min: ability.min ? ability.min : 0,
+                                   max: ability.max}" />
 
+  <!-- ko if: ability.name != 'languages' -->
   <input type="number"
          min="0"
          data-bind="value: ability.temp,
