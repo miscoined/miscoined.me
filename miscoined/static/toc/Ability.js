@@ -53,28 +53,40 @@ define(
           return Math.max(parseInt(self.value()) - self.min(), 0);
         });
       } else if (self.name == 'languages') {
+        self.min = ko.observable(0);
+        self.max = ko.observable(20);
         self.proficientLanguage = ko.observable();
         self.addLanguage = function() {
           self.languages.push({name: ko.observable()});
+          self.valueConstrained(self.value() + 1);
         };
         self.removeLanguage = function(index) {
           self.languages.splice(index, 1);
+          self.valueConstrained(self.value() - 1);
         };
         self.isProficient = function(language) {
           return self.proficientLanguage() == language || self.proficient();
-        }
-        self.value = ko.pureComputed(function() {
-          return self.languages().length;
-        });
+        };
         self.cost = ko.pureComputed(function() {
           return self.languages().reduce(
             (acc, l) => acc + self.isProficient(l.name) ? 0.5 : 1, 0);
         });
       } else {
+        self.min = ko.observable(0);
+        self.max = ko.observable(20);
         self.cost = ko.pureComputed(function() {
           return parseInt(self.value()) / (self.proficient() ? 2 : 1);
         });
       }
 
-    }
+      self.valueConstrained = ko.computed({
+        read: function() {
+          return Math.min(self.max(), Math.max(self.min(), self.value()));
+        },
+        write: function(value) {
+          self.value(Math.min(self.max(), Math.max(self.min(), value)));
+        }
+      });
+
+    };
   });
