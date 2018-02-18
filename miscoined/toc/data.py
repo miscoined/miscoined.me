@@ -38,7 +38,7 @@ def abilities():
     ability_data = load_file("ABILITIES_FILE")
 
     general = ability_data["general"]
-    for ability in general["normal"] + general["investigative"]:
+    for ability in sorted(general["normal"] + general["investigative"]):
         ability = {"name": ability, "category": ["general"]}
         if ability in general["investigative"]:
             ability["investigative"] = True
