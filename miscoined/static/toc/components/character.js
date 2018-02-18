@@ -6,7 +6,7 @@ define(
       ko.mapping = komapping;
 
       ko.mapping.fromJS(params.character(), {
-        "copy": ["abilities"],
+        "copy": ["abilities", "points"],
         "occupation": {
           create: function(options) {
             return ko.observable((options.data)
@@ -17,49 +17,38 @@ define(
                                     credit: {"min": 0, "max": 0},
                                     abilities: {"required": []}})
           }
-        },
-        "points": {
-          create: function(options) {
-            var subAbilities = function(category, init) {
-              return self.abilities
-                .filter(a => a.category[0] == category && a.name != "languages")
-                .reduce((acc, a) => acc - a.cost(), init);
-            };
-
-            return {
-              investigative: ko.pureComputed(function() {
-                return subAbilities("investigative",
-                                    options.data.investigative
-                                    + self.occupation().credit.min
-                                    + self.abilities.find(a => a.name == "languages").value());
-              }),
-              general: ko.pureComputed(function() {
-                return subAbilities("general",
-                                    options.data.general
-                                    - self.health() + 1
-                                    - self.stability() + 1
-                                    - self.sanity() + 4);
-              }),
-              experience: {
-                available: ko.observable(options.data.experience),
-                total: ko.pureComputed({
-                  read: function() {
-                    if (!self.points.available) return 0;
-                    return self.points.experience.available()
-                      - self.points.investigative() * 3
-                      - self.points.general();
-                  },
-                  write: function(value) {
-                    self.points.experience.available(value);
-                  }
-                })
-              }
-            };
-          }
         }
       }, self);
 
       self.abilities = self.abilities.map(a => new Ability(a, self.occupation));
+
+      var sumAbilities = function(filter) {
+        return self.abilities
+          .filter(filter)
+          .reduce((acc, a) => acc + a.cost(), 0);
+      };
+
+      self.points.investigative = ko.observable(self.points.investigative);
+      self.points.investigativeTotal = ko.pureComputed(function() {
+        return self.points.investigative()
+          - sumAbilities(a => a.category[0] == "investigative");
+      });
+
+      self.points.general = ko.observable(self.points.general);
+      self.points.generalTotal = ko.pureComputed(function() {
+        return self.points.general()
+          - sumAbilities(a => a.category[0] == "general")
+          - self.health() + 1
+          - self.stability() + 1
+          - self.sanity() + 4;
+      });
+
+      self.points.experience = ko.observable(self.points.experience);
+      self.points.experienceTotal = ko.pureComputed(function () {
+        return self.points.experience()
+          - (self.points.investigative() - self.points.investigativeTotal()) * 3
+          - (self.points.general() - self.points.generalTotal());
+      });
 
       self.investigativeCategories = [];
       self.abilities.forEach(function(ability) {

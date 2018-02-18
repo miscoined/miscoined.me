@@ -48,9 +48,9 @@ define(
         });
         self.max = ko.pureComputed(function() {
           return occupation().credit.max;
-        })
+        });
         self.cost = ko.pureComputed(function() {
-          return parseInt(self.value()) - self.min()
+          return Math.max(parseInt(self.value()) - self.min(), 0);
         });
       } else if (self.name == 'languages') {
         self.proficientLanguage = ko.observable();

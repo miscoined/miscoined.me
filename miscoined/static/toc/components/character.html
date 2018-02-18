@@ -17,7 +17,9 @@
       <input type="text" id="nationality" data-bind="value: nationality" />
     </li>
     <li>
-      <select data-bind="options: $root.occupations, optionsText: 'name', value: occupation"></select>
+      <select data-bind="options: $root.occupations,
+                         optionsText: 'name',
+                         value: occupation"></select>
     </li>
   </ol>
 
@@ -27,15 +29,23 @@
       <li>
         <label for="investigative-points">Investigative Points</label>
         <input type="number" id="investigative-points"
+               data-bind="value: points.investigativeTotal" readonly /> /
+        <input type="number" id="investigative-points-available"
                data-bind="value: points.investigative" />
       </li>
       <li>
         <label for="general-points">General Points</label>
-        <input type="number" id="general-points" data-bind="value: points.general" />
+        <input type="number" id="general-points"
+               data-bind="value: points.generalTotal" readonly /> /
+        <input type="number" id="general-points-available"
+               data-bind="value: points.general" />
       </li>
       <li>
         <label for="experience-points">Experience Points</label>
-        <input type="number" id="experience-points" data-bind="value: points.experience.total" />
+        <input type="number" id="experience-points"
+               data-bind="value: points.experienceTotal" readonly /> /
+        <input type="number" id="experience-points-available"
+               data-bind="value: points.experience" />
       </li>
   </fieldset>
 
