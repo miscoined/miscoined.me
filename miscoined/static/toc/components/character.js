@@ -45,9 +45,11 @@ define(
 
       self.points.experience = ko.observable(self.points.experience);
       self.points.experienceTotal = ko.pureComputed(function () {
-        return self.points.experience()
-          - (self.points.investigative() - self.points.investigativeTotal()) * 3
-          - (self.points.general() - self.points.generalTotal());
+        return Math.max(sumAbilities(a => a.category[0] == "general")
+                        - self.points.general(), 0)
+          + Math.max(sumAbilities(a => a.category[0] == "investigative")
+                     - self.points.investigative(), 0) * 3
+          + self.points.experience()
       });
 
       self.investigativeCategories = [];
