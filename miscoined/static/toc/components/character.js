@@ -90,7 +90,7 @@ define(
 
     Character.prototype.submit = function() {
       $.ajax ({
-        url: "/toc/character",
+        url: "/toc/api/character",
         type: "POST",
         data: ko.mapping.toJSON(this),
         contentType: "application/json",
