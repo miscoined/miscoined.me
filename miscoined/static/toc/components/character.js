@@ -93,13 +93,7 @@ define(
         url: "/toc/api/character",
         type: "POST",
         data: ko.mapping.toJSON(this),
-        contentType: "application/json",
-        success: function(result) {
-          alert("Success");
-        },
-        error: function(result) {
-          alert(result.responseText);
-        }
+        contentType: "application/json"
       }).then(function(result) {alert("Success");},
               function(result) {alert(result.responseText);});
     };

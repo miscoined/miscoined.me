@@ -17,7 +17,7 @@ def character_page():
     return render_template("toc/character.html")
 
 
-@app.route("/toc/api/character")
+@app.route("/toc/api/character", methods=["GET", "POST"])
 @app.route("/toc/api/character/<name>", methods=["GET", "POST"])
 def api_character(name=None):
 
