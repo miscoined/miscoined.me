@@ -6,3 +6,7 @@ __pycache__/
 
 # Generated characters
 data/characters/*.json
+
+# JS libraries
+/miscoined/static/toc/lib
+/node_modules

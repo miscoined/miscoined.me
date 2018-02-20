@@ -1,11 +1,11 @@
 require.config({
   baseUrl: "/static/toc/",
   paths: {
-    text: "lib/require.text-2.0.15",
-    jquery: "lib/jquery-3.3.1-min",
-    knockout: "lib/knockout-3.4.2-min",
-    komapping: "lib/knockout.mapping-2.4.1-min",
-    kovalidation: "lib/knockout.validation-2.0.3-min"
+    text: "lib/requirejs-text/text",
+    jquery: "lib/jquery/dist/jquery.min",
+    knockout: "lib/knockout/build/output/knockout-latest",
+    komapping: "lib/knockout-mapping/dist/knockout.mapping.min",
+    kovalidation: "lib/knockout.validation/dist/knockout.validation.min"
   },
   shim: {
     komapping: {
@@ -14,7 +14,7 @@ require.config({
     },
     kovalidation: {
       deps: ["knockout"],
-      exports: "komapping"
+      exports: "kovalidation"
     }
   }
 });
@@ -41,8 +41,7 @@ require(
     ko.components.register("character", {
       viewModel: { require: "components/character" },
       template: { require: "text!components/character.html" }
-    })
-
+    });
 
     ko.applyBindings(new ViewModel());
   });

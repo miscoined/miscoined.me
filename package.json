@@ -1,0 +1,16 @@
+{
+  "name": "miscoined.me",
+  "version": "1.0.0",
+  "description": "Personal website",
+  "repository": "https://miscoined@github.com/miscoined/miscoined.me",
+  "author": "miscoined <miscoined@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "jquery": "^3.3.1",
+    "knockout": "^3.5.0-beta",
+    "knockout-mapping": "^2.6.0",
+    "knockout.validation": "^2.0.3",
+    "requirejs": "^2.3.5",
+    "requirejs-text": "^2.0.15"
+  }
+}
