@@ -13,7 +13,11 @@ define(
                         self);
 
       self.occupation = ko.pureComputed(function () {
-        return params.occupations().find(o => o.name == self.occupationName());
+        var occ = params.occupations().find(o => o.name == self.occupationName());
+        if (occ) return occ;
+        return {name: "",
+                credit: {min: 0, max: 0},
+                abilities: {required: [], options: {allowed: [], count: 0}}};
       });
 
       self.abilities = self.abilities.map(a => new Ability(a, self.occupation));

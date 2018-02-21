@@ -4,17 +4,17 @@
   {{ super() }}
   <link rel="stylesheet" href="{{ url_for('static', filename='css/toc.css') }}" />
 
-  <script src="{{ url_for('static', filename='toc/lib/requirejs/require.js') }}"></script>
+  <script src="{{ url_for('static', filename='toc/node_modules/requirejs/require.js') }}"></script>
 
   <script>
     require.config({
       baseUrl: "/static/toc/",
       paths: {
-        text: "lib/requirejs-text/text",
-        jquery: "lib/jquery/dist/jquery.min",
-        knockout: "lib/knockout/build/output/knockout-latest",
-        komapping: "lib/knockout-mapping/dist/knockout.mapping.min",
-        kovalidation: "lib/knockout.validation/dist/knockout.validation.min"
+        text: "node_modules/requirejs-text/text",
+        jquery: "node_modules/jquery/dist/jquery.min",
+        knockout: "node_modules/knockout/build/output/knockout-latest",
+        komapping: "node_modules/knockout-mapping/dist/knockout.mapping.min",
+        kovalidation: "node_modules/knockout.validation/dist/knockout.validation.min"
       },
       shim: {
         komapping: {

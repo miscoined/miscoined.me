@@ -10,3 +10,4 @@ data/characters/*.json
 # JS libraries
 /miscoined/static/toc/lib
 /node_modules
+node_modules/

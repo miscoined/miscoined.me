@@ -3,19 +3,7 @@
   "name": "",
   "age": "",
   "nationality": "",
-  "occupation": {
-    "name": "",
-    "credit": {
-      "min": 0,
-      "max": 0
-    },
-    "abilities": {
-      "required": [],
-      "options": {
-        "count": 0
-      }
-    }
-  },
+  "occupationName": "",
   "health": 1,
   "stability": 1,
   "sanity": 4,
@@ -28,7 +16,7 @@
   "contacts": [],
   "inventory": [],
   "points": {
-    "general": 64,
+    "general": 65,
     "investigative": 16,
     "experience": 0
   },
