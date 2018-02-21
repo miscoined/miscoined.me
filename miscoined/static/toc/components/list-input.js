@@ -8,7 +8,7 @@ define(["knockout"], function(ko) {
             self.list.splice(index, 1);
         };
         self.addItem = function(data, event) {
-            self.list.push({value: ko.observable()});
+            self.list.push({value: ko.observable("")});
         };
     };
 });

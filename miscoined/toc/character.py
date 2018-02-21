@@ -8,10 +8,15 @@ class Character:
 
     @classmethod
     def new(cls):
-        """Return a new trail of cthulu character dict."""
+        """Return a trail of cthulu character dict."""
         character = data.load_file("BLANK_CHARACTER_FILE")
         character["abilities"] = data.abilities()
         return character
+
+    @classmethod
+    def load(cls, name=None):
+        """Return a trail of cthulu character loaded from a file."""
+        return data.load_char(name)
 
     @classmethod
     def put(cls, char, name=None):

@@ -6,41 +6,34 @@ define(
 
       ko.mapping.fromJS(ability, {
         "copy": ["name", "investigative", "category"],
-        "languages": {
-          create: function(options) {
-            return {name: ko.observable(options.data)};
-          }
-        },
-        "district knowledges": {
-          create: function(options) {
-            return {name: options.data.name, value: ko.observable(options.data.value)};
-          }
-        }
+        "include": ["proficientChecked"]
       }, self);
+
+      if (!self.proficientChecked) self.proficientChecked = ko.observable(false);
 
       self.jsonName = 'ability-' + self.name.replace(/\s+/g, '');
 
       self.proficientRequired = ko.pureComputed(function() {
-        return occupation() && occupation().abilities.required.indexOf(self.name) != -1;
+          return occupation()
+          && occupation().abilities.required.indexOf(self.name) != -1;
       });
 
       self.proficientOption = ko.pureComputed(function() {
-        return occupation()
+          return occupation()
           && occupation().abilities.options
           && occupation().abilities.options.allowed.includes(self.name);
       });
 
       self.proficient = ko.pureComputed({
-        read: function() {
+          read: function() {
           return self.proficientRequired() ||
-            self.proficientOption && self.proficientChecked();
-        },
-        write: function(isChecked) {
+              self.proficientOption && self.proficientChecked();
+          },
+          write: function(isChecked) {
           self.proficientChecked(isChecked);
-        }
+          }
       });
 
-      self.proficientChecked = ko.observable(false);
 
       if (self.name == 'credit rating') {
         self.min = ko.pureComputed(function() {
@@ -57,7 +50,7 @@ define(
         self.max = ko.observable(20);
         self.proficientLanguage = ko.observable();
         self.addLanguage = function() {
-          self.languages.push({name: ko.observable()});
+          self.languages.push({name: ko.observable("")});
           self.valueConstrained(self.value() + 1);
         };
         self.removeLanguage = function(index) {
@@ -69,7 +62,7 @@ define(
         };
         self.cost = ko.pureComputed(function() {
           return self.languages().reduce(
-            (acc, l) => acc + self.isProficient(l.name) ? 0.5 : 1, 0);
+            (acc, l) => acc + (self.isProficient(l.name()) ? 0.5 : 1), 0);
         });
       } else {
         self.min = ko.observable(0);

@@ -11,6 +11,11 @@ def load_file(config_name):
         return json.load(fp)
 
 
+def load_char(name):
+    with open(os.path.join(app.config["CHARACTER_DIR"], name + ".json")) as fp:
+        return json.load(fp)
+
+
 def put_file(directory, filename, data):
     with open(os.path.join(app.config[directory], filename), "w") as fp:
         return json.dump(data, fp, indent=2)

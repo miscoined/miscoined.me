@@ -5,20 +5,16 @@ define(
       var self = this;
       ko.mapping = komapping;
 
-      ko.mapping.fromJS(params.character(), {
-        "copy": ["abilities", "points"],
-        "occupation": {
-          create: function(options) {
-            return ko.observable((options.data)
-                                 ? {name: options.data.name,
-                                    credit: options.data.credit,
-                                    abilities: options.data.abilities}
-                                 : {name: "",
-                                    credit: {"min": 0, "max": 0},
-                                    abilities: {"required": []}})
-          }
-        }
-      }, self);
+      ko.mapping.fromJS(params.character(),
+                        {"copy": ["abilities",
+                                  "points.investigative",
+                                  "points.general",
+                                  "points.experience"]},
+                        self);
+
+      self.occupation = ko.pureComputed(function () {
+        return params.occupations().find(o => o.name == self.occupationName());
+      });
 
       self.abilities = self.abilities.map(a => new Ability(a, self.occupation));
 
@@ -33,6 +29,9 @@ define(
         return self.points.investigative()
           - sumAbilities(a => a.category[0] == "investigative");
       });
+      self.points.investigativeTotalDisplay = ko.pureComputed(function() {
+        return Math.max(self.points.investigativeTotal(), 0);
+      })
 
       self.points.general = ko.observable(self.points.general);
       self.points.generalTotal = ko.pureComputed(function() {
@@ -42,14 +41,15 @@ define(
           - self.stability() + 1
           - self.sanity() + 4;
       });
+      self.points.generalTotalDisplay = ko.pureComputed(function() {
+        return Math.max(self.points.generalTotal(), 0);
+      })
 
       self.points.experience = ko.observable(self.points.experience);
       self.points.experienceTotal = ko.pureComputed(function () {
-        return Math.max(sumAbilities(a => a.category[0] == "general")
-                        - self.points.general(), 0)
-          + Math.max(sumAbilities(a => a.category[0] == "investigative")
-                     - self.points.investigative(), 0) * 3
-          + self.points.experience()
+        return parseInt(self.points.experience())
+          + Math.min(0, self.points.generalTotal())
+          + Math.min(0, self.points.investigativeTotal() * 3);
       });
 
       self.investigativeCategories = [];

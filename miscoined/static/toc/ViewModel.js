@@ -1,9 +1,8 @@
 define(['jquery', 'knockout'], function($, ko) {
-  return function ViewModel() {
+  return function ViewModel(characterName) {
     var self = this;
 
     self.occupations = ko.observableArray();
-    self.character = ko.observable();
 
     $.ajax({
       url: "/toc/api/occupations",
@@ -13,8 +12,9 @@ define(['jquery', 'knockout'], function($, ko) {
       self.occupations(data);
     });
 
+    self.character = ko.observable();
     $.ajax({
-      url: "/toc/api/character",
+      url: "/toc/api/character" + (characterName ? '/' + characterName : ''),
       type: "GET",
       contentType: "application/json",
     }).done(function(data) {

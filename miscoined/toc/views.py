@@ -13,8 +13,9 @@ def landing():
 
 
 @app.route("/toc/character")
-def character_page():
-    return render_template("toc/character.html")
+@app.route("/toc/character/<name>")
+def character_page(name=None):
+    return render_template("toc/character.html", character_name=name)
 
 
 @app.route("/toc/api/character", methods=["GET", "POST"])
