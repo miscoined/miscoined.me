@@ -9,7 +9,7 @@ from miscoined.toc.character import Character
 @app.route("/toc")
 @app.route("/toc/")
 def landing():
-    return redirect(url_for('character'))
+    return redirect(url_for('character_page'))
 
 
 @app.route("/toc/character")
