@@ -21,5 +21,7 @@ class Character:
     @classmethod
     def put(cls, char, name=None):
         """Put character data into a character file."""
-        data.put_file('CHARACTER_DIR',
-                      "".join(f"{char['name']}.json".split()).lower(), char)
+        if name is None:
+            name = "".join(char['name'].split())
+        data.put_file('CHARACTER_DIR', name, char)
+        return name

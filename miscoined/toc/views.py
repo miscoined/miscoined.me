@@ -23,7 +23,7 @@ def character_page(name=None):
 def api_character(name=None):
 
     if request.method == "POST":
-        Character.put(request.get_json(), name=name)
+        name = Character.put(request.get_json(), name=name)
         return redirect(url_for('character_page', name=name))
     character = Character.new() if name is None else Character.load(name)
     return jsonify(character)
