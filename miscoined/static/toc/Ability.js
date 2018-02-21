@@ -24,6 +24,10 @@ define(
           && occupation().abilities.options.allowed.includes(self.name);
       });
 
+      self.proficientDisabled = ko.pureComputed(function() {
+        return self.proficientRequired() || !self.proficientOption();
+      })
+
       self.proficient = ko.pureComputed({
           read: function() {
           return self.proficientRequired() ||

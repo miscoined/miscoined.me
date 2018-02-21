@@ -1,7 +1,7 @@
 <li>
   <input type="checkbox"
          data-bind="checked: ability.proficient,
-               disable: ability.proficientRequired() || !ability.proficientOption()" />
+               disable: ability.proficientDisabled" />
 
   <label class="ability" data-bind="text: ability.name,
                 css: {'general-investigative': ability.investigative},
