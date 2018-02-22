@@ -1,11 +1,13 @@
 from flask import render_template
 
-from miscoined import app
+from . import landing
 
-@app.route("/")
+
+@landing.route("/")
 def main():
-  return render_template('landing.html')
+    return render_template('landing.html')
 
-@app.route("/cv")
+
+@landing.route("/cv")
 def cv_html():
-  return render_template("cv.html")
+    return render_template("cv.html")

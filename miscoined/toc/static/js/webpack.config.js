@@ -2,7 +2,7 @@ const path = require("path");
 
 module.exports = {
     resolve: {
-        modulesDirectories: ["node_modules", "miscoined/static/toc"]
+        modulesDirectories: ["node_modules", "./"]
     },
     module: {
         loaders: [

@@ -98,10 +98,13 @@ define(
         type: "POST",
         data: ko.mapping.toJSON(this),
         contentType: "application/json"
-      }).then(function(result) {alert("Success");},
-              function(result) {alert(result.responseText);});
+      }).then(function(result) {
+          window.location.replace("/toc/character/" + result.name);
+      }, function(result) {
+          alert(result.responseText);
+      });
     };
 
     return Character;
   }
-)
+);

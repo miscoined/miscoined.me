@@ -2,13 +2,13 @@
 
 {% block head %}
   {{ super() }}
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/toc.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('toc.static', filename='css/toc.css') }}" />
 
-  <script src="{{ url_for('static', filename='toc/node_modules/requirejs/require.js') }}"></script>
+  <script src="{{ url_for('toc.static', filename='js/node_modules/requirejs/require.js') }}"></script>
 
   <script>
     require.config({
-      baseUrl: "/static/toc/",
+      baseUrl: "{{ url_for('toc.static', filename='js') }}",
       paths: {
         text: "node_modules/requirejs-text/text",
         jquery: "node_modules/jquery/dist/jquery.min",

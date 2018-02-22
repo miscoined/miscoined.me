@@ -2,10 +2,14 @@
 {% block head %}
   <meta charset="utf-8" />
   <title>Kelly Stewart</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cabin:400,700" />
-  <link rel="stylesheet" href="{{ url_for('static', filename='font/bukhari-script.css') }}" />
-  <link rel="stylesheet" href="{{ url_for('static', filename='font/cabin.css') }}" />
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}" />
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Cabin:400,700" />
+  <link rel="stylesheet"
+        href="{{ url_for('landing.static', filename='font/bukhari-script.css') }}" />
+  <link rel="stylesheet"
+        href="{{ url_for('landing.static', filename='font/cabin.css') }}" />
+  <link rel="stylesheet"
+        href="{{ url_for('landing.static', filename='css/base.css') }}" />
   <script src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 {% endblock %}
 

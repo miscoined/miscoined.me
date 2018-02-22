@@ -2,7 +2,8 @@
 
 {% block head %}
   {{ super() }}
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/landing.css') }}" />
+  <link rel="stylesheet"
+        href="{{ url_for('landing.static', filename='css/landing.css') }}" />
 {% endblock %}
 
 {% block content %}
@@ -15,7 +16,7 @@
     <a href="https://www.github.com/miscoined">
       <span class="fab fa-github"></span> @miscoined
     </a>
-    <a href="{{ url_for('static', filename='doc/cv.pdf') }}">
+    <a href="{{ url_for('landing.static', filename='doc/cv.pdf') }}">
       <span class="fas fa-download"></span> CV
     </a>
   </address>

@@ -5,6 +5,7 @@
   "repository": "https://miscoined@github.com/miscoined/miscoined.me",
   "author": "miscoined <miscoined@gmail.com>",
   "license": "MIT",
+    "main": "ViewModel.js",
   "scripts": {
     "dev": "node_modules/webpack-dev-server/bin/webpack-dev-server.js",
     "build": "node_modules/webpack/bin/webpack.js"
