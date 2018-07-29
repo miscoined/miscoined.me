@@ -3,17 +3,17 @@
   <meta charset="utf-8" />
   <title>Kelly Stewart</title>
   <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Cabin:400,700" />
+        href="https://fonts.googleapis.com/css?family=OpenSans:400" />
   <link rel="stylesheet"
         href="{{ url_for('landing.static', filename='font/bukhari-script.css') }}" />
   <link rel="stylesheet"
-        href="{{ url_for('landing.static', filename='font/cabin.css') }}" />
-  <link rel="stylesheet"
         href="{{ url_for('landing.static', filename='css/base.css') }}" />
-  <script src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
+        integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
+        crossorigin="anonymous">
 {% endblock %}
 
-<header>
+<header class="main-header">
   {% block header %}{% endblock %}
 </header>
 

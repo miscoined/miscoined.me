@@ -28,8 +28,12 @@ h1 {
 
 address {
   text-align: left;
-  font: 15px Cabin, CabinFallback, sans-serif;
+  font: 14px "Open Sans", sans-serif;
   color: #544f50;
+}
+
+address > * {
+  border-bottom: 1px solid #171616;
 }
 
 address a {
@@ -39,13 +43,21 @@ address a {
   text-decoration: none;
   padding: 10px 10px;
   text-align: center;
-  border-bottom: 1px solid #171616;
 }
 
 address a:hover {
   background-color: #171616;
 }
 
-address a svg {
+address a i {
   float: left;
+}
+
+.cv {
+  display: flex;
+}
+
+.cv-view {
+  flex-grow: 1;
+  border-right: 1px solid #171616;
 }

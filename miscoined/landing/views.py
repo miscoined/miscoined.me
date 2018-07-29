@@ -9,5 +9,5 @@ def main():
 
 
 @landing.route("/cv")
-def cv_html():
+def cv():
     return render_template("cv.html")

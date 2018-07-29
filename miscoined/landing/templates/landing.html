@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base-landing.html" %}
 
 {% block head %}
   {{ super() }}
@@ -11,13 +11,16 @@
 
   <address>
     <a href="mailto:stewart.g.kelly@gmail.com">
-      <span class="fas fa-envelope"></span> stewart.g.kelly@gmail.com
+      <i class="fas fa-envelope"></i> stewart.g.kelly@gmail.com
     </a>
     <a href="https://www.github.com/miscoined">
-      <span class="fab fa-github"></span> @miscoined
+      <i class="fab fa-github"></i> @miscoined
     </a>
-    <a href="{{ url_for('landing.static', filename='doc/cv.pdf') }}">
-      <span class="fas fa-download"></span> CV
-    </a>
+    <div class="cv">
+      <a class="cv-view" href="/cv">CV</a>
+      <a class="cv-download" href="{{ url_for('landing.static', filename='doc/cv.pdf') }}">
+        <i class="fas fa-download"></i>
+      </a>
+    </div>
   </address>
 {% endblock %}
